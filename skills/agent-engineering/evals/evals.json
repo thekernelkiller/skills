@@ -1,0 +1,35 @@
+{
+  "skill_name": "agent-engineering",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I have a codebase at ~/my-agent/ that I've been working on. It's supposed to be an AI coding assistant but it keeps failing after about 10 turns of conversation — the LLM starts returning errors about context length. Also sometimes when I ask it to send a summary email, it just sends it without asking me. Can you audit the codebase and tell me what's wrong and how to fix it? Here's the structure: agent.py (about 4000 lines), tools.py, prompts.py. The main entry point is agent.py:Agent.run_conversation().",
+      "expected_output": "An audit identifying: no compaction causing context overflow, direct side effects (email send without confirmation), monster class at 4000 lines. Should recommend compaction implementation, pending action pattern for email, and incremental refactoring.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I'm building an AI agent from scratch for customer support. It needs to read tickets from our database, search our knowledge base, draft responses, and eventually send emails to customers. I want to do this right from the start. What's the architecture I should use? I know Python well but I've never built an agent before. I'm worried about over-engineering it.",
+      "expected_output": "Should recommend: simple ReAct loop (~200 lines), tool registration with explicit registry, layered frozen system prompt, pending action pattern for email sending (critical for customer support), compaction for long ticket conversations, approval gates for sending responses. Should explicitly warn against over-engineering: no abstract factories, no plugin system yet, no elaborate state machines. Should provide a skeleton architecture with component sizing.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Our team has a Slack bot agent that helps with deployments. Every time we add a new tool, we have to update 5 different files: the tool implementation, an __init__.py import, the agent's tool registry dict, the system prompt builder, and the docs. It's really annoying and we keep forgetting to update one of them. Is there a better way? We have about 15 tools and growing. Also our monthly OpenAI bill is $2000 and I think we might be paying too much — the system prompt is big and we rebuild it with tool descriptions every time someone messages the bot.",
+      "expected_output": "Should recommend: self-registering tools (create file, call register(), done — zero manual imports), frozen system prompt (build once, never rebuild mid-session), prompt caching awareness (explain how rebuilding prompt destroys cache and costs 10x more), composable toolsets if tools grow beyond 30. Should estimate cost savings: $2000 → $200 with proper caching.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "I'm reviewing a PR for our agent codebase and something feels off. The agent class handles everything — the LLM loop, file operations, database writes, Slack message formatting, and even the webhook handler. It's about 6000 lines in one file. Can you help me identify all the problems and suggest a refactoring plan? I need to convince my team lead that this needs to change.",
+      "expected_output": "Should articulate: mixed concerns (loop + IO + DB + UI + webhooks) making testing impossible, single-responsibility violation, inability to reuse agent core for other platforms. Should propose: extract loop into ~300 lines, separate tools, separate UI/persistence, separate platform adapters. Should provide refactoring order (opportunistic: extract next time you add a feature).",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Last week our AI agent sent 47 emails to the wrong customer because it hallucinated an email address. This can never happen again. We're a healthcare startup so this is a regulatory issue too. We're currently using a simple while-loop that calls OpenAI's API directly — when the LLM returns a 'send_email' tool call, we just execute it. What do we need to change architecturally to make this safe?",
+      "expected_output": "Should prioritize: pending action pattern (emails become drafts, never sent directly), approval gates for all external communications, prompt hardening (treating email content as evidence not instruction), audit logging of all pending action approvals. Should explain the five-layer safety model and why multiple layers matter (each catches what previous missed). Should address healthcare regulatory angle: audit trail, approval records, data handling considerations.",
+      "files": []
+    }
+  ]
+}
