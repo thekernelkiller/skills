@@ -206,7 +206,50 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
   #toolbar { display: none !important; }
   #proposal { box-shadow: none !important; border-radius: 0 !important; max-width: 100% !important; }
   .ef { background: none !important; box-shadow: none !important; }
-  @page { size: A4; margin: 12mm 14mm; }
+  .pricing-section { break-before: page; page-break-before: always; break-inside: avoid; page-break-inside: avoid; }
+  .pricing-section .sec-h1 { margin-bottom: .55rem; }
+  .format-grid { break-inside: avoid; page-break-inside: avoid; gap: .65rem; }
+  .fc { break-inside: avoid; page-break-inside: avoid; }
+  .fc-head { padding: .65rem .8rem; }
+  .fc-body { padding: .7rem .8rem; }
+  .price-num { font-size: 24px; }
+  .price-gst,
+  .fc-meta,
+  .fc-desc,
+  .tags { margin-bottom: .45rem; }
+  .divider { margin: .45rem 0; }
+  .attend-list li { padding-top: 2px; padding-bottom: 2px; line-height: 1.4; }
+  .cta-band,
+  .note-bar {
+    margin-left: -0.33in;
+    margin-right: -0.33in;
+  }
+  .speaker-card {
+    grid-template-columns: 190px minmax(0, 1fr) !important;
+    align-items: center !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .s-media {
+    align-self: center !important;
+  }
+  .s-photo img {
+    width: 100% !important;
+    height: auto !important;
+  }
+  .s-copy {
+    align-self: center !important;
+  }
+  .footer-info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .footer-info {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  @page { size: A4; margin: 0.24in 0.33in; }
 }
 </style>
 </head>
@@ -307,7 +350,7 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
       <p class="small-note">Note: Content and flow will be customised to Malpani Foods' food manufacturing, retail, and brand context, team composition, and live interactions on the day.</p>
     </div>
 
-    <div class="section">
+    <div class="section pricing-section">
       <div class="sec-label">Pricing and Formats</div>
       <div class="sec-h1">Available Masterclass Formats</div>
       <div class="format-grid">
@@ -575,7 +618,7 @@ body{background:#fff!important;padding:0!important;}
 #proposal{box-shadow:none!important;border-radius:0!important;max-width:100%!important;}
 .ef{background:none!important;box-shadow:none!important;}
 *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
-@page{size:A4;margin:12mm 14mm;}
+@page{size:A4;margin:0.24in 0.33in;}
 </style></head><body>${b}</body></html>`;
 }
 function printPDF() {
