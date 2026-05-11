@@ -1,0 +1,4 @@
+interface:
+  display_name: "Proposal Personalizer"
+  short_description: "Personalize IKF masterclass proposals"
+  default_prompt: "Use $proposal-personalizer to personalize an IKF masterclass proposal from the locked base template."
