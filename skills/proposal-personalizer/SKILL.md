@@ -12,6 +12,7 @@ description: Personalize IKF AI Masterclass proposal HTML files from the locked 
 - Always duplicate the base template and make changes only in the new client file.
 - Preserve layout, structure, styling, spacing, and design unless the user explicitly requests a design or layout change.
 - Do not add the removed cover metadata block (`Prepared for` / `Prepared by`) unless the user explicitly asks for it.
+- Set the cover subtitle to `Prepared for <Client Company Name>`; do not use the contact person's name there.
 - Keep default payment terms as 50% advance at booking and 50% balance post-session unless the user provides different terms.
 - Use Calibri unless the user explicitly asks for a different font.
 - Open the edited file in Chrome for the user to preview.
@@ -25,10 +26,9 @@ Before editing, make sure these are known:
 - Website/domain, or an email address that can provide the domain
 - Recommended format
 - Pricing
-- Outstation status, travel, and venue handling
 - Payment terms, if they differ from the template
 
-If any required detail is missing, ask for it before editing. If the website/domain is missing but email is provided, derive the domain from the email.
+If any required detail is missing, ask for it before editing. If the website/domain is missing but email is provided, derive the domain from the email. Do not ask a travel or venue question unless the user has already indicated the session is outstation, remote, multi-city, or has special venue logistics.
 
 ## Workflow
 
@@ -40,7 +40,7 @@ If any required detail is missing, ask for it before editing. If the website/dom
 6. Update all client-specific fields and prose.
 7. Update recommendation text using the researched business context and the requested format.
 8. Update `Available Masterclass Formats` so the recommended format is visually highlighted and all prices match the user-provided pricing.
-9. Update travel and venue terms only from user-provided facts.
+9. Generate the standard travel and venue block from the template unless the user provides specific outstation, remote, multi-city, or special venue terms.
 10. Update payment terms only from user-provided facts.
 11. Keep all non-client-specific IKF content unchanged unless the user asks otherwise.
 12. Open the edited file in Chrome for preview.
@@ -52,13 +52,14 @@ Replace every occurrence of prior or placeholder client details, including:
 
 - Contact name
 - Company name
+- Cover subtitle, which must use the company name
 - Short company name
 - Domain, website, and email
 - Industry and business context
 - Recommendation block title and body
 - Masterclass format recommendation and badge
 - Inclusion examples that mention client industry
-- Travel and venue section
+- Travel and venue section, only when special logistics are provided
 - Outcome statements
 - Confirmation steps
 - Confidentiality note

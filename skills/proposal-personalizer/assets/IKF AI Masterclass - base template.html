@@ -55,7 +55,9 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
 #proposal { max-width: 860px; margin: 0 auto; background: var(--white); border-radius: 14px; overflow: hidden; box-shadow: 0 4px 32px rgba(26,31,94,0.12); }
 
 /* COVER */
-.cover { background: var(--navy); padding: 2.5rem 2.75rem 2rem; position: relative; overflow: hidden; }
+.image-banner { background: #f7f5ff; }
+.image-banner img { display: block; width: 100%; height: auto; }
+.cover { background: var(--navy); padding: 2.5rem 2.75rem 2rem; margin-top: -1px; position: relative; overflow: hidden; }
 .cover::before { content:''; position: absolute; top:-80px; right:-80px; width:320px; height:320px; border-radius:50%; background:rgba(108,63,199,0.14); pointer-events:none; }
 .cover-tag { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: #9997d8; margin-bottom: .5rem; font-family: var(--font); }
 .cover-h1 { font-family: var(--font); font-size: 32px; font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: .3rem; }
@@ -163,8 +165,15 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
 .stxt { font-family: var(--font); font-size: 13px; color: var(--muted); line-height: 1.65; }
 
 /* SPEAKER */
-.speaker-card { display: flex; gap: 1.1rem; align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.25rem; }
-.s-av { width: 50px; height: 50px; border-radius: 50%; background: var(--navy); color: #9997d8; font-family: var(--font); font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.speaker-card { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 1.35rem; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.25rem; }
+.s-photo { border-radius: 8px; overflow: hidden; background: #ebe9ff; line-height: 0; }
+.s-photo img { display: block; width: 100%; height: auto; }
+.s-media { display: flex; flex-direction: column; gap: .65rem; align-self: center; }
+.s-links { display: flex; justify-content: center; gap: .45rem; }
+.s-link { width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--navy); text-decoration: none; background: var(--white); border: 1px solid var(--border); }
+.s-link:hover { color: var(--purple); border-color: #c8c4ef; background: #fdfdff; }
+.s-link svg { width: 18px; height: 18px; display: block; }
+.s-copy { align-self: center; transform: translateY(-10px); }
 .s-name { font-family: var(--font); font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 1px; }
 .s-role { font-family: var(--font); font-size: 13px; color: var(--purple); margin-bottom: .5rem; }
 .s-body { font-family: var(--font); font-size: 14px; color: var(--muted); line-height: 1.7; }
@@ -175,15 +184,17 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
 .cta-band { background: var(--navy); padding: 1.75rem 2.75rem; text-align: center; }
 .cta-q { font-family: var(--font); font-size: 16px; font-style: italic; color: #c0bfee; max-width: 520px; margin: 0 auto 1.1rem; line-height: 1.6; }
 .contact-row { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
-.ci { font-family: var(--font); font-size: 13px; color: #e0dfff; }
-.footer-info-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 1.1rem; margin-top: 18px; align-items: start; }
-.footer-info { font-family: Calibri, Arial, sans-serif; font-size: 13px; color: #d9d9f2; line-height: 1.7; }
+.ci { font-family: var(--font); font-size: 13px; color: #e0dfff; text-decoration: none; }
+.ci:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.footer-info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; margin-top: 18px; align-items: stretch; }
+.footer-info { font-family: Calibri, Arial, sans-serif; font-size: 13px; color: #d9d9f2; line-height: 1.7; min-height: 210px; padding: 1.1rem; border: 1px solid rgba(255,255,255,0.22); border-radius: 8px; background: rgba(255,255,255,0.06); display: flex; flex-direction: column; justify-content: center; text-align: center; }
 .footer-info.right { line-height: 1.8; }
 .footer-info b { font-weight: 700; }
 .note-bar { font-family: var(--font); font-size: 11px; font-style: italic; color: var(--muted); text-align: center; padding: .55rem 1.5rem; background: var(--surface); border-top: 1px solid var(--border); }
 
 @media (max-width: 760px) {
   .footer-info-grid { grid-template-columns: 1fr; }
+  .speaker-card { grid-template-columns: 1fr; }
 }
 
 /* TOAST */
@@ -215,10 +226,14 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
 
 <div id="proposal">
 
+  <div class="image-banner">
+    <img src="https://res.cloudinary.com/dvsroizwe/image/upload/v1778483838/ChatGPT_Image_May_11_2026_12_45_04_PM_v8fpob.png" alt="AI Leadership Masterclass for Enterprises">
+  </div>
+
   <div class="cover">
     <div class="cover-tag">Commercial Proposal · Confidential</div>
     <div class="cover-h1">AI Leadership Masterclass</div>
-    <div class="cover-h2">Prepared exclusively for Sanjay Malpani</div>
+    <div class="cover-h2">Prepared for Malpani Foods</div>
   </div>
 
   <div class="trust-strip">
@@ -307,7 +322,6 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
             <div class="price-gst">+ GST applicable</div>
             <div class="fc-meta">
               <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>4 hours</div>
-              <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Up to 30 participants</div>
               <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Physical, on-site</div>
             </div>
             <hr class="divider">
@@ -335,7 +349,6 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
             <div class="price-gst">+ GST applicable</div>
             <div class="fc-meta">
               <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>7 hours</div>
-              <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Up to 30 participants</div>
               <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Physical, on-site</div>
             </div>
             <hr class="divider">
@@ -364,7 +377,6 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
             <div class="price-gst">+ GST applicable</div>
             <div class="fc-meta">
               <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 full working days</div>
-              <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Up to 30 participants</div>
               <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Physical, on-site</div>
             </div>
             <hr class="divider">
@@ -421,12 +433,12 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
       <div class="sec-h1">Travel and Venue</div>
       <div class="travel-grid">
         <div>
-          <span class="tg-lbl">📍 Within Pune</span>
-      <div class="tg-body">No travel charges applicable. Session conducted at Malpani Foods' premises or a mutually agreed venue in Pune.</div>
+          <span class="tg-lbl">📍 Venue</span>
+      <div class="tg-body">Session to be conducted at the client's premises or at a mutually agreed suitable venue.</div>
         </div>
         <div>
           <span class="tg-lbl">📌 Session Note</span>
-      <div class="tg-body">Since the engagement is within Pune, no additional travel, food, or accommodation charges are applicable for this engagement.</div>
+      <div class="tg-body">Travel, food, and accommodation terms will be handled as applicable based on the final session location and engagement scope.</div>
         </div>
       </div>
     </div>
@@ -476,8 +488,18 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
       <div class="sec-label">Facilitator</div>
       <div class="sec-h1">About the Speaker</div>
       <div class="speaker-card">
-        <div class="s-av">AD</div>
-        <div>
+        <div class="s-media">
+          <div class="s-photo"><img src="https://res.cloudinary.com/dvsroizwe/image/upload/v1778484069/ChatGPT_Image_May_11_2026_12_50_44_PM_qnqkpv.png" alt="Ashishh Dalia"></div>
+          <div class="s-links">
+            <a class="s-link" href="https://in.linkedin.com/in/ashishhdalia" target="_blank" rel="noopener" aria-label="Ashishh Dalia LinkedIn profile" title="LinkedIn Profile">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.58c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.68H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.61 0 4.27 2.38 4.27 5.47v6.27zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.78 13.02H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg>
+            </a>
+            <a class="s-link" href="https://ikf-aimasterclass-qb108we.gamma.site/" target="_blank" rel="noopener" aria-label="AI Masterclass site" title="Masterclass Site">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M12 3c2.4 2.5 3.6 5.5 3.6 9s-1.2 6.5-3.6 9c-2.4-2.5-3.6-5.5-3.6-9S9.6 5.5 12 3z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="s-copy">
           <div class="s-name">Ashishh Dalia</div>
           <div class="s-role">CEO, I Knowledge Factory Pvt. Ltd.</div>
           <div class="s-body">25+ years helping businesses grow, evolve, and adapt to technology. Having worked with 1,500+ businesses across manufacturing, engineering, and industrial sectors, he helps leadership teams understand AI in a practical, business-first way — without technical complexity or jargon.</div>
@@ -497,9 +519,9 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
   <div class="cta-band">
     <div class="cta-q">"AI will not replace leadership. But leaders who leverage AI will redefine organisational growth."</div>
     <div class="contact-row">
-      <div class="ci">🌐 www.ikf.solutions</div>
-      <div class="ci">✉️ enquiry@ikf.co.in</div>
-      <div class="ci">📞 +91 95039 39911</div>
+      <a class="ci" href="https://www.ikf.solutions" target="_blank" rel="noopener">🌐 www.ikf.solutions</a>
+      <a class="ci" href="mailto:enquiry@ikf.co.in">✉️ enquiry@ikf.co.in</a>
+      <a class="ci" href="tel:+919503939911">📞 +91 95039 39911</a>
     </div>
 
     <div class="footer-info-grid">
