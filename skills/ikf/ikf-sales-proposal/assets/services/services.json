@@ -1,0 +1,150 @@
+{
+  "services": {
+    "branding_kit": {
+      "label": "Branding Kit",
+      "summary": "A concise identity starter package covering logo, stationery and essential brand assets.",
+      "deliverables": [
+        "Logo design",
+        "Visiting card design",
+        "Letterhead design",
+        "Envelope design",
+        "Email signature",
+        "Tagline or brand line direction"
+      ],
+      "pricingTable": [
+        ["All-Inclusive Branding Kit Package", "1", "100000", "100000"]
+      ],
+      "terms": ["50% advance to begin work", "50% balance after final approval before source handover"]
+    },
+    "website": {
+      "label": "Website Design & Development",
+      "summary": "Custom website design and development with a structured CMS-backed build, responsive layouts and launch support.",
+      "deliverables": [
+        "Website design and UI/UX direction",
+        "Custom frontend development",
+        "Headless CMS architecture with Next.js and WordPress CMS",
+        "Responsive desktop, tablet and mobile layouts",
+        "Enquiry forms and basic lead capture",
+        "Core modules such as news, blogs, testimonials, gallery and FAQ when selected",
+        "Content placement and launch support"
+      ],
+      "pricingTable": [
+        ["Website Designing & Ideation", "1", "", ""],
+        ["Headless CMS Architecture with Next.js SSR and MySQL Integration", "1", "", ""],
+        ["Inner/Subsequent pages data placement", "12", "", ""],
+        ["Enquiry forms", "2", "", ""],
+        ["Product module development", "1", "", ""],
+        ["Module Development: News/Events, Blogs, Testimonials, Gallery, FAQ", "5", "", ""],
+        ["Content Writing Website", "1", "", ""]
+      ],
+      "terms": ["50% advance to begin", "25% after design approval", "25% before launch", "GST extra as applicable"]
+    },
+    "amc": {
+      "label": "Annual Website Maintenance",
+      "summary": "Ongoing website maintenance for updates, uptime checks, minor fixes, form checks and routine technical support.",
+      "deliverables": [
+        "Security and plugin/theme updates where applicable",
+        "Minor content changes",
+        "Performance monitoring",
+        "Technical support during office hours",
+        "Browser and device compatibility checks",
+        "Database and code maintenance",
+        "Email and form management",
+        "Emergency support for website-down cases"
+      ],
+      "pricingTable": [
+        ["Annual Website Maintenance", "12 months", "", ""]
+      ],
+      "terms": ["100% advance annually", "Major design/development changes are billed separately"]
+    },
+    "hosting": {
+      "label": "Website Hosting",
+      "summary": "Managed hosting support aligned with the website stack and expected traffic profile.",
+      "deliverables": [
+        "Hosting setup or renewal coordination",
+        "SSL support",
+        "Server coordination",
+        "Basic uptime and access support",
+        "Backup coordination where available in the plan"
+      ],
+      "pricingTable": [
+        ["Website Hosting", "12 months", "", ""]
+      ],
+      "terms": ["100% advance annually", "Third-party hosting/provider charges are payable as applicable"]
+    },
+    "seo": {
+      "label": "Search Engine Optimization",
+      "summary": "SEO planning, on-page recommendations, off-page activity, reporting and technical coordination.",
+      "deliverables": [
+        "Keyword planning",
+        "On-page SEO recommendations",
+        "Off-page submissions",
+        "Blog coordination as scoped",
+        "Monthly reporting",
+        "Technical SEO support such as redirects, sitemap, robots.txt and tracking coordination"
+      ],
+      "pricingTable": [
+        ["SEO India", "50 keywords", "", ""],
+        ["Paid Backlinking / Digital PR India", "As scoped", "", ""],
+        ["SEO Middle East", "20 keywords", "", ""]
+      ],
+      "terms": ["Monthly retainer payable 100% in advance", "SEO results depend on competition, search changes, content, technical access and approval speed"]
+    },
+    "ppc": {
+      "label": "Performance Marketing",
+      "summary": "Google and Meta campaign planning, execution, optimization and reporting for lead generation, reach or engagement objectives.",
+      "deliverables": [
+        "Campaign strategy and media plan",
+        "Google Search campaign setup when selected",
+        "Meta campaign setup when selected",
+        "Audience, keyword and creative coordination",
+        "Landing page coordination when selected",
+        "Performance monitoring and reporting"
+      ],
+      "pricingTable": [
+        ["Google Search Lead Generation Media", "Monthly", "", ""],
+        ["Meta Lead Generation Media", "Monthly", "", ""],
+        ["Meta Branding / Reach Media", "Monthly", "", ""],
+        ["Execution Retainer", "20% of media spend or minimum retainer", "", ""],
+        ["Landing Page Design & Development", "One-time", "", ""]
+      ],
+      "terms": ["Media spends are payable in advance", "Platform billing, taxes and card charges are separate where applicable"]
+    },
+    "smm": {
+      "label": "Social Media Management",
+      "summary": "Monthly social media planning, content calendar, static posts, reels coordination, page management and reporting.",
+      "deliverables": [
+        "Instagram, Facebook and LinkedIn page management as scoped",
+        "Monthly content calendar",
+        "Static posts",
+        "Illustrative reels",
+        "Reel shooting and editing when selected",
+        "Profile optimization",
+        "Monthly analytics and reporting"
+      ],
+      "pricingTable": [
+        ["Page Management Platforms", "3", "", ""],
+        ["Static Posts", "4", "", ""],
+        ["Illustrative Reels", "4", "", ""],
+        ["Reels Shooting & Editing", "4", "", ""]
+      ],
+      "terms": ["Monthly retainer payable 100% in advance", "Additional platforms and creatives are billed separately"]
+    }
+  },
+  "shared": {
+    "clientResponsibilities": [
+      "Timely approvals, feedback and access sharing",
+      "Brand guidelines, product/service inputs and factual content",
+      "Legal, regulatory and claim approvals from the client side",
+      "Access to domain, hosting, CMS, analytics, ad accounts or social handles where required"
+    ],
+    "policies": [
+      "Commercials are exclusive of GST unless stated otherwise.",
+      "Third-party tools, stock assets, media spends, hosting, domain, plugin and platform charges are billed separately unless included in the commercial table.",
+      "Major scope additions, extra pages, extra creative routes, extra platforms, new modules and urgent work outside the agreed scope may be quoted separately.",
+      "Final ownership of approved creative/source assets transfers after full payment, subject to third-party license terms.",
+      "No guaranteed SEO ranking, lead volume, sales conversion or platform performance is promised because these depend on market, competition, budgets, approvals and platform behavior."
+    ]
+  }
+}
+

@@ -1,0 +1,5 @@
+interface:
+  display_name: "IKF Sales Proposal"
+  short_description: "DOCX-faithful editable IKF proposals"
+  brand_color: "#20206B"
+  default_prompt: "Use $ikf-sales-proposal to create a DOCX-faithful editable IKF proposal for this client and service scope: ..."

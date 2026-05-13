@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{TITLE}}</title>
+  <style>
+    :root {
+      --blue: #00508f;
+      --navy: #00457c;
+      --gold: #d9a300;
+      --paper: #fff;
+      --ink: #111;
+      --muted: #444;
+      --table-head: #b8cae6;
+      --table-fill: #fff2c9;
+      --line: #d7d7d7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #d9d9d9;
+      color: var(--ink);
+      font: 10.5px/1.35 Calibri, Arial, sans-serif;
+    }
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      background: rgba(245, 245, 245, .96);
+      border-bottom: 1px solid #bbb;
+    }
+    button, select {
+      border: 1px solid var(--blue);
+      background: var(--blue);
+      color: #fff;
+      border-radius: 3px;
+      padding: 6px 9px;
+      font: inherit;
+      cursor: pointer;
+    }
+    button.secondary, select {
+      background: #fff;
+      color: var(--blue);
+    }
+    .page {
+      width: 794px;
+      min-height: 1123px;
+      margin: 12px auto;
+      background: var(--paper);
+      box-shadow: 0 1px 8px rgba(0,0,0,.22);
+      overflow: hidden;
+      page-break-after: always;
+    }
+    .page:last-of-type { page-break-after: auto; }
+    .brand-page {
+      position: relative;
+      padding: 0;
+      display: grid;
+      place-items: stretch;
+    }
+    .brand-page img {
+      width: 100%;
+      height: 100%;
+      min-height: 1123px;
+      object-fit: cover;
+      display: block;
+    }
+    .cover-title {
+      position: absolute;
+      top: 285px;
+      left: 250px;
+      right: 80px;
+      text-align: center;
+      font-size: 27px;
+      line-height: 1.25;
+      font-weight: 700;
+      color: #775500;
+    }
+    .cover-title .client {
+      display: block;
+      color: var(--blue);
+      font-size: 33px;
+    }
+    .content-page {
+      padding: 58px 72px 54px;
+    }
+    .section {
+      margin: 0 0 22px;
+      break-inside: avoid;
+    }
+    h1, h2, h3, h4, p { margin: 0; }
+    h1 {
+      color: var(--blue);
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.18;
+      margin-bottom: 20px;
+    }
+    h2 {
+      color: var(--blue);
+      font-size: 12px;
+      text-transform: uppercase;
+      line-height: 1.2;
+      margin: 0 0 8px;
+    }
+    h3 {
+      color: var(--blue);
+      font-size: 11px;
+      line-height: 1.25;
+      margin: 10px 0 4px;
+    }
+    h4 {
+      color: #000;
+      font-size: 10.5px;
+      font-weight: 700;
+      margin: 8px 0 2px;
+    }
+    p { margin-bottom: 6px; }
+    .small-note { color: var(--muted); }
+    .bullet-list,
+    .bullet-list ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .bullet-list li {
+      position: relative;
+      margin: 0 0 3px;
+      padding-left: 19px;
+    }
+    .bullet-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .bullet-list ul { margin-top: 2px; }
+    .bullet-list ul li {
+      padding-left: 17px;
+      margin-bottom: 2px;
+    }
+    .bullet-list ul li::before {
+      content: "○";
+      color: var(--gold);
+      font-size: 10px;
+    }
+    .list-tools,
+    .row-tools {
+      display: flex;
+      gap: 6px;
+      margin: 6px 0 10px;
+    }
+    .list-tools button,
+    .row-tools button {
+      font-size: 10px;
+      padding: 4px 7px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      margin: 10px 0 16px;
+      break-inside: avoid;
+    }
+    th, td {
+      border: 1px solid #fff;
+      padding: 6px;
+      vertical-align: top;
+      word-break: break-word;
+    }
+    th {
+      background: var(--table-head);
+      color: #000;
+      font-weight: 700;
+      text-align: center;
+    }
+    td { background: var(--table-fill); }
+    .table-title th {
+      background: var(--blue);
+      color: #fff;
+      text-align: center;
+    }
+    .total-row td {
+      background: var(--blue);
+      color: #fff;
+      font-weight: 700;
+    }
+    .money { text-align: right; white-space: nowrap; }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+    }
+    [contenteditable="true"] { outline: 1px dashed transparent; border-radius: 2px; }
+    body.editing [contenteditable="true"]:hover,
+    body.editing [contenteditable="true"]:focus {
+      outline-color: rgba(0,80,143,.5);
+      background: #fffce8;
+    }
+    body:not(.editing) .edit-only { display: none !important; }
+    @media print {
+      body { background: #fff; }
+      .toolbar, .edit-only { display: none !important; }
+      .page { margin: 0; box-shadow: none; width: auto; min-height: 1123px; }
+    }
+  </style>
+</head>
+<body class="editing">
+  <div class="toolbar">
+    <button type="button" onclick="toggleEdit()">Edit Mode</button>
+    <button type="button" class="secondary" onclick="saveHtml()">Save HTML</button>
+    <button type="button" class="secondary" onclick="window.print()">Export PDF</button>
+    <select id="sectionJump" onchange="jumpToSection(this.value)">
+      <option value="">Jump to section</option>
+    </select>
+  </div>
+
+  {{BODY}}
+
+  <script>
+    function toggleEdit() {
+      document.body.classList.toggle('editing');
+    }
+    function jumpToSection(name) {
+      if (!name) return;
+      const section = document.querySelector('[data-section="' + CSS.escape(name) + '"]');
+      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    function populateJump() {
+      const select = document.getElementById('sectionJump');
+      document.querySelectorAll('[data-section]').forEach(section => {
+        const option = document.createElement('option');
+        option.value = section.dataset.section;
+        option.textContent = section.dataset.section;
+        select.appendChild(option);
+      });
+    }
+    function listFor(button) {
+      return button.closest('.section, td').querySelector('.bullet-list');
+    }
+    function addBullet(button) {
+      const list = listFor(button);
+      if (!list) return;
+      const li = document.createElement('li');
+      li.contentEditable = 'true';
+      li.textContent = 'New bullet';
+      list.appendChild(li);
+      li.focus();
+    }
+    function addSubBullet(button) {
+      const list = listFor(button);
+      const parent = list && list.lastElementChild;
+      if (!parent) return;
+      let nested = parent.querySelector('ul');
+      if (!nested) {
+        nested = document.createElement('ul');
+        parent.appendChild(nested);
+      }
+      const li = document.createElement('li');
+      li.contentEditable = 'true';
+      li.textContent = 'New sub-bullet';
+      nested.appendChild(li);
+      li.focus();
+    }
+    function deleteBullet(button) {
+      const list = listFor(button);
+      if (!list) return;
+      const bullets = list.querySelectorAll('li');
+      if (bullets.length > 1) bullets[bullets.length - 1].remove();
+    }
+    function tableFor(button) {
+      return button.closest('.section, td').querySelector('table');
+    }
+    function addTableRow(button) {
+      const table = tableFor(button);
+      if (!table) return;
+      const body = table.tBodies[0];
+      const template = Array.from(body.rows).reverse().find(row => !row.classList.contains('total-row')) || body.rows[0];
+      const row = template.cloneNode(true);
+      row.classList.remove('total-row');
+      row.querySelectorAll('td').forEach((cell, index) => {
+        cell.contentEditable = 'true';
+        cell.textContent = index === 0 ? 'New item' : '';
+      });
+      body.appendChild(row);
+    }
+    function deleteTableRow(button) {
+      const table = tableFor(button);
+      if (!table) return;
+      const rows = Array.from(table.tBodies[0].rows).filter(row => !row.classList.contains('total-row'));
+      if (rows.length > 1) rows[rows.length - 1].remove();
+    }
+    function saveHtml() {
+      const clone = document.documentElement.cloneNode(true);
+      const html = '<!doctype html>\n' + clone.outerHTML;
+      const blob = new Blob([html], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = document.title.replace(/[^a-z0-9]+/gi, '_') + '.html';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+    populateJump();
+  </script>
+</body>
+</html>
