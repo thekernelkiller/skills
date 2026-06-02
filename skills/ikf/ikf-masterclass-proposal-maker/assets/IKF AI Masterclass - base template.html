@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IKF Solutions — AI Leadership Masterclass Proposal — Malpani Foods</title>
+<title>IKF Solutions — AI-Native Thinking Accelerator Proposal — I Knowledge Factory</title>
 <style>
 :root {
   --navy: #1a1f5e;
@@ -89,14 +89,21 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
 .rec-box-head { font-family: var(--font); font-size: 13px; font-weight: 700; color: var(--amber-text); text-transform: uppercase; letter-spacing: 1px; margin-bottom: .55rem; }
 .rec-box-body { font-family: var(--font); font-size: 14px; color: #5a4200; line-height: 1.75; }
 .rec-box-body b { font-weight: 700; }
+.pain-list { margin: 0 0 1rem 1.2rem; padding: 0; }
+.pain-list li { font-family: var(--font); font-size: 14px; color: inherit; line-height: 1.75; padding-left: 2px; }
+.pain-list li::marker { color: inherit; }
 
 /* PILLAR GRID */
-.pillars-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+.pillars-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: .75rem; }
 .pillar-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: .85rem 1rem; display: flex; gap: .75rem; }
 .pnum { width: 28px; height: 28px; border-radius: 50%; background: var(--navy); color: #fff; font-family: var(--font); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .ptitle { font-family: var(--font); font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
 .pdesc { font-family: var(--font); font-size: 13px; color: var(--muted); line-height: 1.5; }
-.ppct { font-family: var(--font); font-size: 12px; color: var(--purple); font-weight: 700; margin-top: 4px; }
+.relevance-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.relevance-track { height: 6px; flex: 1; border-radius: 100px; background: #dedbf5; overflow: hidden; }
+.relevance-fill { height: 100%; border-radius: inherit; background: var(--purple); width: var(--rel); }
+.relevance-score { font-family: var(--font); font-size: 12px; color: var(--purple); font-weight: 700; min-width: 34px; text-align: right; }
+.ppct { font-family: var(--font); font-size: 12px; color: var(--muted); font-weight: 700; margin-top: 5px; }
 
 /* FORMAT CARDS */
 .format-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: .9rem; }
@@ -124,6 +131,18 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
 .attend-list { list-style: none; }
 .attend-list li { font-family: var(--font); font-size: 13px; color: var(--muted); padding: 3px 0 3px 14px; position: relative; line-height: 1.5; }
 .attend-list li::before { content: "–"; position: absolute; left: 0; color: var(--purple); }
+
+/* SINGLE INVESTMENT */
+.investment-card { border: 2px solid var(--purple); border-radius: 10px; overflow: hidden; box-shadow: 0 2px 18px rgba(108,63,199,0.14); }
+.investment-head { padding: .9rem 1rem; background: var(--purple); color: #fff; }
+.investment-kicker { font-family: var(--font); font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #d4cef8; margin-bottom: 2px; }
+.investment-title { font-family: var(--font); font-size: 16px; font-weight: 700; }
+.investment-body { padding: 1rem 1.1rem; background: var(--white); display: grid; grid-template-columns: .85fr 1.15fr; gap: 1.1rem; align-items: start; }
+.investment-price { font-family: var(--font); font-size: 32px; font-weight: 700; color: var(--navy); line-height: 1; margin-bottom: 4px; }
+.investment-note { font-family: var(--font); font-size: 12px; color: var(--muted); line-height: 1.6; }
+.investment-points { list-style: none; display: grid; gap: 5px; }
+.investment-points li { font-family: var(--font); font-size: 13px; color: var(--muted); line-height: 1.5; padding-left: 16px; position: relative; }
+.investment-points li::before { content: "✓"; position: absolute; left: 0; color: #3b9a1a; font-weight: 700; }
 
 /* INCL/EXCL */
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
@@ -193,6 +212,8 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
 .note-bar { font-family: var(--font); font-size: 11px; font-style: italic; color: var(--muted); text-align: center; padding: .55rem 1.5rem; background: var(--surface); border-top: 1px solid var(--border); }
 
 @media (max-width: 760px) {
+  .pillars-grid,
+  .investment-body { grid-template-columns: 1fr; }
   .footer-info-grid { grid-template-columns: 1fr; }
   .speaker-card { grid-template-columns: 1fr; }
 }
@@ -258,7 +279,7 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
 <div id="toolbar">
   <div style="display:flex;align-items:center;">
     <span class="tb-brand">IKF Solutions</span>
-    <span class="tb-sub">AI Masterclass Proposal — Malpani Foods</span>
+    <span class="tb-sub">AI-Native Thinking Accelerator Proposal — I Knowledge Factory</span>
   </div>
   <div class="tb-right">
     <button class="tb-btn" id="editBtn" onclick="toggleEdit()">✏️ Edit Fields</button>
@@ -270,19 +291,19 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
 <div id="proposal">
 
   <div class="image-banner">
-    <img src="https://res.cloudinary.com/dvsroizwe/image/upload/v1778483838/ChatGPT_Image_May_11_2026_12_45_04_PM_v8fpob.png" alt="AI Leadership Masterclass for Enterprises">
+    <img src="https://res.cloudinary.com/dvsroizwe/image/upload/v1778483838/ChatGPT_Image_May_11_2026_12_45_04_PM_v8fpob.png" alt="AI-Native Thinking Accelerator for Enterprises">
   </div>
 
   <div class="cover">
     <div class="cover-tag">Commercial Proposal · Confidential</div>
-    <div class="cover-h1">AI Leadership Masterclass</div>
-    <div class="cover-h2">Prepared for Malpani Foods</div>
+    <div class="cover-h1">AI-Native Thinking Accelerator</div>
+    <div class="cover-h2">Prepared for I Knowledge Factory Pvt. Ltd.</div>
   </div>
 
   <div class="trust-strip">
     <div class="tp">25+ years in business</div>
     <div class="tp">1,500+ businesses served</div>
-    <div class="tp">Manufacturing &amp; Engineering sector experience</div>
+    <div class="tp">Digital marketing &amp; business transformation experience</div>
     <div class="tp">100+ leadership forums</div>
     <div class="tp">Pune, India</div>
   </div>
@@ -297,146 +318,136 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
     </div>
 
     <div class="section">
-      <div class="sec-label">IKF Recommendation</div>
-      <div class="sec-h1">Our Recommendation for Malpani Foods</div>
+      <div class="sec-label">Personal Transformation Fit</div>
+      <div class="sec-h1">Our Recommendation for You, Ashish Dalia — CEO</div>
       <div class="rec-box">
-        <div class="rec-box-head">⭐ Recommended: Full Mastery Programme (2 Days) — ₹1,25,000 + GST</div>
+        <div class="rec-box-head">From business pressure to AI-native leadership clarity</div>
         <div class="rec-box-body">
-          Based on Malpani Foods' food manufacturing and retail brand context, we recommend the <b>Full Mastery Programme</b>.<br><br>
-          The brand operates in a business where quality, consistency, hygiene, production planning, customer experience, and distribution all matter. A two-day format gives the leadership team enough depth to move beyond AI awareness and into <b>practical, cross-functional application</b> across operations, sales, marketing, reporting, and decision-making.<br><br>
-          The Full Mastery Programme will give Sanjay Malpani and the leadership team a structured, hands-on understanding of AI's real business impact — with enough time for discussion, demonstrations, and department-specific examples.<br><br>
-          <b>The objective of this session is clarity, alignment, and applied confidence — not implementation.</b> Once leadership is aligned, the next step can move toward consulting, roadmap, or rollout with confidence.
+          Ashish, based on I Knowledge Factory Pvt. Ltd.'s website design and digital marketing agency context, your role requires decisions across client acquisition, campaign quality, creative output, delivery timelines, team productivity, reporting, and account growth for a 50-person team.<br><br>
+          The challenges you are facing are not only technology challenges. They are thinking, coordination, communication, and execution challenges. AI becomes useful only when you can identify where it can improve client strategy, reduce repetitive effort, strengthen delivery workflows, and create sharper business visibility.<br><br>
+          <ul class="pain-list">
+            <li>Building AI-native clarity for a 50-person agency team without reducing AI to tool demonstrations.</li>
+            <li>Improving productivity across website design, digital marketing, content, reporting, and client servicing.</li>
+            <li>Helping department leads identify practical AI opportunities in their daily workflows.</li>
+          </ul>
+          The <b>AI-Native Thinking Accelerator</b> is designed to help you move from reacting to day-to-day agency pressure to seeing where AI-native thinking can change how leadership, sales, marketing, HR, finance, client service, operations, and digital transformation work together.<br><br>
+          <b>By the end of the journey, the transformation is personal and practical: from a CEO evaluating AI from the outside to an AI-native decision-maker who can ask better questions, spot meaningful opportunities, and guide a growing agency team with clearer direction.</b>
         </div>
       </div>
     </div>
 
     <div class="section">
-      <div class="sec-label">Masterclass Structure</div>
-      <div class="sec-h1">4-Pillar Framework — Equal Weightage</div>
+      <div class="sec-label">Program Structure</div>
+      <div class="sec-h1">9-Pillar AI-Native Thinking Framework</div>
       <div class="pillars-grid">
         <div class="pillar-card">
           <div class="pnum">01</div>
           <div>
-            <div class="ptitle">AI Tools and Fundamentals</div>
-            <div class="pdesc">Understanding AI tools relevant to business — operational relevance, not technology awareness alone.</div>
-            <div class="ppct">25% of session time</div>
+            <div class="ptitle">Leadership &amp; Strategy</div>
+            <div class="pdesc">Rethinking decision-making, priorities, and growth choices through an AI-native leadership lens.</div>
+            <div class="relevance-row"><div class="relevance-track"><div class="relevance-fill" style="--rel: 95%;"></div></div><div class="relevance-score">95%</div></div>
+            <div class="ppct">Relevance for this participant</div>
           </div>
         </div>
         <div class="pillar-card">
           <div class="pnum">02</div>
           <div>
-            <div class="ptitle">Prompting Techniques</div>
-            <div class="pdesc">Ask better questions, avoid common mistakes, and frame prompts for department-specific outcomes.</div>
-            <div class="ppct">25% of session time</div>
+            <div class="ptitle">Sales &amp; Marketing</div>
+            <div class="pdesc">Using AI-native thinking to improve lead quality, campaign planning, customer communication, and market insight.</div>
+            <div class="relevance-row"><div class="relevance-track"><div class="relevance-fill" style="--rel: 95%;"></div></div><div class="relevance-score">95%</div></div>
+            <div class="ppct">Relevance for this participant</div>
           </div>
         </div>
         <div class="pillar-card">
           <div class="pnum">03</div>
           <div>
-            <div class="ptitle">AI Across Business Functions</div>
-            <div class="pdesc">Practical AI use cases across operations, procurement, HR, sales, reporting, and decision-making.</div>
-            <div class="ppct">25% of session time</div>
+            <div class="ptitle">HR &amp; Recruitment</div>
+            <div class="pdesc">Improving hiring, employee communication, role clarity, training workflows, and people decisions.</div>
+            <div class="relevance-row"><div class="relevance-track"><div class="relevance-fill" style="--rel: 80%;"></div></div><div class="relevance-score">80%</div></div>
+            <div class="ppct">Relevance for this participant</div>
           </div>
         </div>
         <div class="pillar-card">
           <div class="pnum">04</div>
           <div>
-            <div class="ptitle">Unexplored Tools and Techniques</div>
-            <div class="pdesc">Lesser-known AI workflows and productivity techniques with direct business performance impact.</div>
-            <div class="ppct">25% of session time</div>
+            <div class="ptitle">Finance &amp; Accounts</div>
+            <div class="pdesc">Strengthening reporting, analysis, controls, documentation, and management visibility.</div>
+            <div class="relevance-row"><div class="relevance-track"><div class="relevance-fill" style="--rel: 70%;"></div></div><div class="relevance-score">70%</div></div>
+            <div class="ppct">Relevance for this participant</div>
+          </div>
+        </div>
+        <div class="pillar-card">
+          <div class="pnum">05</div>
+          <div>
+            <div class="ptitle">Customer Service &amp; Experience</div>
+            <div class="pdesc">Identifying opportunities to improve response quality, service consistency, and customer understanding.</div>
+            <div class="relevance-row"><div class="relevance-track"><div class="relevance-fill" style="--rel: 90%;"></div></div><div class="relevance-score">90%</div></div>
+            <div class="ppct">Relevance for this participant</div>
+          </div>
+        </div>
+        <div class="pillar-card">
+          <div class="pnum">06</div>
+          <div>
+            <div class="ptitle">Operations</div>
+            <div class="pdesc">Applying AI-native thinking to process bottlenecks, coordination, productivity, and daily execution.</div>
+            <div class="relevance-row"><div class="relevance-track"><div class="relevance-fill" style="--rel: 90%;"></div></div><div class="relevance-score">90%</div></div>
+            <div class="ppct">Relevance for this participant</div>
+          </div>
+        </div>
+        <div class="pillar-card">
+          <div class="pnum">07</div>
+          <div>
+            <div class="ptitle">Procurement &amp; Purchase</div>
+            <div class="pdesc">Improving vendor, freelancer, partner, software, and media purchase decisions.</div>
+            <div class="relevance-row"><div class="relevance-track"><div class="relevance-fill" style="--rel: 45%;"></div></div><div class="relevance-score">45%</div></div>
+            <div class="ppct">Relevance for this participant</div>
+          </div>
+        </div>
+        <div class="pillar-card">
+          <div class="pnum">08</div>
+          <div>
+            <div class="ptitle">Production &amp; Manufacturing</div>
+            <div class="pdesc">Exploring AI opportunities around planning, quality, wastage, maintenance, documentation, and shop-floor insight.</div>
+            <div class="relevance-row"><div class="relevance-track"><div class="relevance-fill" style="--rel: 30%;"></div></div><div class="relevance-score">30%</div></div>
+            <div class="ppct">Relevance for this participant</div>
+          </div>
+        </div>
+        <div class="pillar-card">
+          <div class="pnum">09</div>
+          <div>
+            <div class="ptitle">Projects, Engineering &amp; Digital Transformation</div>
+            <div class="pdesc">Building practical transformation roadmaps across projects, engineering teams, systems, and digital initiatives.</div>
+            <div class="relevance-row"><div class="relevance-track"><div class="relevance-fill" style="--rel: 95%;"></div></div><div class="relevance-score">95%</div></div>
+            <div class="ppct">Relevance for this participant</div>
           </div>
         </div>
       </div>
-      <p class="small-note">Note: Content and flow will be customised to Malpani Foods' food manufacturing, retail, and brand context, team composition, and live interactions on the day.</p>
+      <p class="small-note">Note: The 3-month journey includes 9 physical masterclasses and 3 online review and Q&amp;A sessions. Content and examples will be customised to I Knowledge Factory's agency context, 50-person team composition, and stated challenges.</p>
     </div>
 
     <div class="section pricing-section">
-      <div class="sec-label">Pricing and Formats</div>
-      <div class="sec-h1">Available Masterclass Formats</div>
-      <div class="format-grid">
-
-        <div class="fc">
-          <div class="fc-head">
-            <div class="fc-badge">Half Day</div>
-            <div class="fc-name">Awareness and Overview</div>
-          </div>
-          <div class="fc-body">
-            <div class="price-num">₹50,000</div>
-            <div class="price-gst">+ GST applicable</div>
-            <div class="fc-meta">
-              <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>4 hours</div>
-              <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Physical, on-site</div>
-            </div>
-            <hr class="divider">
-            <div class="sub-lbl">Session Style</div>
-            <div class="tags"><span class="tag">Lecture-led</span><span class="tag">Case studies</span><span class="tag gray">Not hands-on</span></div>
-            <div class="fc-desc">Focused on AI awareness, business context, and illustrative examples. Leadership engages in guided discussion — not live tool practice.</div>
-            <hr class="divider">
-            <div class="sub-lbl">Best Suited For</div>
-            <ul class="attend-list">
-              <li>CXOs and MDs seeking strategic AI clarity</li>
-              <li>Leadership wanting AI context for their industry</li>
-              <li>Organisations exploring AI before committing to a programme</li>
-              <li>First AI engagement for the leadership team</li>
-            </ul>
-          </div>
+      <div class="sec-label">Membership Investment</div>
+      <div class="sec-h1">Single Accelerator Membership</div>
+      <div class="investment-card">
+        <div class="investment-head">
+          <div class="investment-kicker">Investment per participant</div>
+          <div class="investment-title">IKF AI-Native Thinking Accelerator</div>
         </div>
-
-        <div class="fc">
-          <div class="fc-head mid">
-            <div class="fc-badge">Full Day</div>
-            <div class="fc-name">Theory Plus Hands-On Practice</div>
-          </div>
-            <div class="fc-body">
-            <div class="price-num">₹75,000</div>
+        <div class="investment-body">
+          <div>
+            <div class="investment-price">₹15,000</div>
             <div class="price-gst">+ GST applicable</div>
-            <div class="fc-meta">
-              <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>7 hours</div>
-              <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Physical, on-site</div>
-            </div>
-            <hr class="divider">
-            <div class="sub-lbl">Session Style</div>
-            <div class="tags"><span class="tag">Lecture-led</span><span class="tag g">Hands-on practice</span><span class="tag g">Live case studies</span></div>
-            <div class="fc-desc">Theory combined with hands-on interaction. Participants use AI tools, work through prompts, and apply to real business scenarios.</div>
-            <hr class="divider">
-            <div class="sub-lbl">Best Suited For</div>
-            <ul class="attend-list">
-              <li>Department heads driving AI adoption</li>
-              <li>Teams wanting theory and practice together</li>
-              <li>Organisations preparing teams for implementation</li>
-              <li>Professionals seeking live demonstrations</li>
-            </ul>
+            <div class="investment-note">Membership is valid for one individual participant only and is non-transferable.</div>
           </div>
+          <ul class="investment-points">
+            <li>3-month structured transformation journey</li>
+            <li>9 physical masterclasses across key business functions</li>
+            <li>3 online review and Q&amp;A sessions</li>
+            <li>Approximately 3 hours per session</li>
+            <li>Session notes, frameworks, worksheets, assignments, and implementation exercises</li>
+            <li>No recordings; sessions are designed for active participation and discussion</li>
+          </ul>
         </div>
-
-        <div class="fc rec">
-          <div class="fc-head acc">
-            <div class="fc-badge">Two Days</div>
-            <div class="fc-name">Full Mastery Programme</div>
-          </div>
-          <div class="fc-body">
-            <div class="rec-pill">Recommended for Malpani Foods</div>
-            <div class="price-num">₹1,25,000</div>
-            <div class="price-gst">+ GST applicable</div>
-            <div class="fc-meta">
-              <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 full working days</div>
-              <div class="fc-meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Physical, on-site</div>
-            </div>
-            <hr class="divider">
-            <div class="sub-lbl">Session Style</div>
-            <div class="tags"><span class="tag">Lecture-led</span><span class="tag g">Deep-dive practice</span><span class="tag g">Extended live work</span></div>
-            <div class="fc-desc">Full mastery over two days — deep theory plus extended hands-on practice, live workflows, and function-specific exercises.</div>
-            <hr class="divider">
-            <div class="sub-lbl">Best Suited For</div>
-            <ul class="attend-list">
-              <li>Organisations committed to AI transformation</li>
-              <li>Cross-functional teams across leadership to operations</li>
-              <li>Teams seeking end-to-end AI mastery</li>
-              <li>Businesses planning near-term AI implementation</li>
-            </ul>
-          </div>
-        </div>
-
       </div>
     </div>
 
@@ -449,11 +460,11 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
           <div class="ie-body">
             <div class="ie-item"><span class="ic-g">✓</span><span>Masterclass presentation used during session (not shared post-session)</span></div>
             <div class="ie-item"><span class="ic-g">✓</span><span>All concepts, frameworks, and discussion content (shareable)</span></div>
-            <div class="ie-item"><span class="ic-g">✓</span><span>Live AI tool demonstrations relevant to Malpani Foods' operations context</span></div>
+            <div class="ie-item"><span class="ic-g">✓</span><span>Live AI tool demonstrations relevant to website design, digital marketing, content, reporting, and client servicing workflows</span></div>
             <div class="ie-item"><span class="ic-g">✓</span><span>Prompting frameworks and business productivity guidance</span></div>
             <div class="ie-item"><span class="ic-g">✓</span><span>Industry-specific AI use cases and practical examples</span></div>
             <div class="ie-item"><span class="ic-g">✓</span><span>Open Q&amp;A and leadership discussion</span></div>
-            <div class="ie-item"><span class="ic-g">✓</span><span>Session customised to Malpani Foods' industry and team</span></div>
+            <div class="ie-item"><span class="ic-g">✓</span><span>Session customised to I Knowledge Factory's agency context and 50-person team</span></div>
           </div>
         </div>
         <div class="ie-box">
@@ -491,14 +502,14 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
       <div class="sec-h1">Payment Terms</div>
       <div class="pay-grid">
         <div class="pay-card dark">
-          <div class="pay-lbl lt">Advance — At Booking</div>
-          <div class="pay-val lt">50%</div>
-          <div class="pay-note lt">Required to confirm the session date and begin preparation</div>
+          <div class="pay-lbl lt">Advance — At Registration</div>
+          <div class="pay-val lt">100%</div>
+          <div class="pay-note lt">Required to confirm participation in the accelerator</div>
         </div>
         <div class="pay-card">
-          <div class="pay-lbl">Balance — Post Session</div>
-          <div class="pay-val">50%</div>
-          <div class="pay-note">Due upon completion of the masterclass</div>
+          <div class="pay-lbl">Membership Terms</div>
+          <div class="pay-val">Final</div>
+          <div class="pay-note">Registrations are non-transferable, non-shareable, and non-refundable after confirmation</div>
         </div>
       </div>
       <p class="small-note" style="margin-top:.7rem;">Payment via NEFT / RTGS / Cheque in favour of I Knowledge Factory Pvt. Ltd. Bank details shared upon acceptance.</p>
@@ -506,12 +517,12 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
 
     <div class="section">
       <div class="sec-label">Value Delivered</div>
-      <div class="sec-h1">Post-Masterclass, Your Leadership Team Will</div>
+      <div class="sec-h1">After the Accelerator, Your Leadership Team Will</div>
       <div class="outcomes-grid">
-        <div class="oc"><div class="oc-icon">💡</div><div class="oc-title">Identify practical AI opportunities within Malpani Foods' operations and workflows</div></div>
-        <div class="oc"><div class="oc-icon">⚙️</div><div class="oc-title">Explore automation potential across manufacturing, procurement, and customer operations</div></div>
+        <div class="oc"><div class="oc-icon">💡</div><div class="oc-title">Identify practical AI opportunities within I Knowledge Factory's agency operations and workflows</div></div>
+        <div class="oc"><div class="oc-icon">⚙️</div><div class="oc-title">Explore automation potential across website design, digital marketing, reporting, and client servicing</div></div>
         <div class="oc"><div class="oc-icon">📈</div><div class="oc-title">Understand how AI improves productivity, reporting, and decisions</div></div>
-        <div class="oc"><div class="oc-icon">🧠</div><div class="oc-title">Build AI-native thinking across the Malpani leadership team</div></div>
+        <div class="oc"><div class="oc-icon">🧠</div><div class="oc-title">Build AI-native thinking across the I Knowledge Factory leadership and department teams</div></div>
         <div class="oc"><div class="oc-icon">🎯</div><div class="oc-title">Define clear next steps for AI adoption within the organisation</div></div>
         <div class="oc"><div class="oc-icon">🚀</div><div class="oc-title">Align the team before investing in AI tools or implementation</div></div>
       </div>
@@ -520,11 +531,11 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
     <div class="section">
       <div class="sec-label">To Proceed</div>
       <div class="sec-h1">How to Confirm This Engagement</div>
-      <div class="step-row"><div class="snum">1</div><div class="stxt">Confirm the preferred masterclass format — we recommend the Full Mastery Programme for this engagement</div></div>
-      <div class="step-row"><div class="snum">2</div><div class="stxt">Share the preferred date and location for the session</div></div>
+      <div class="step-row"><div class="snum">1</div><div class="stxt">Confirm participant names, designations, email addresses, and phone numbers</div></div>
+      <div class="step-row"><div class="snum">2</div><div class="stxt">Share the preferred batch timing and any department-specific challenges to prioritise</div></div>
       <div class="step-row"><div class="snum">3</div><div class="stxt">Issue a Purchase Order or written confirmation of acceptance</div></div>
-      <div class="step-row"><div class="snum">4</div><div class="stxt">Process 50% advance payment to confirm the booking</div></div>
-      <div class="step-row"><div class="snum">5</div><div class="stxt">IKF will customise the session for Malpani Foods' business context and share a pre-session brief</div></div>
+      <div class="step-row"><div class="snum">4</div><div class="stxt">Process 100% advance payment to confirm participation</div></div>
+      <div class="step-row"><div class="snum">5</div><div class="stxt">IKF will customise examples for I Knowledge Factory's agency context and share the program onboarding details</div></div>
     </div>
 
     <div class="section">
@@ -545,7 +556,7 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
         <div class="s-copy">
           <div class="s-name">Ashishh Dalia</div>
           <div class="s-role">CEO, I Knowledge Factory Pvt. Ltd.</div>
-          <div class="s-body">25+ years helping businesses grow, evolve, and adapt to technology. Having worked with 1,500+ businesses across manufacturing, engineering, and industrial sectors, he helps leadership teams understand AI in a practical, business-first way — without technical complexity or jargon.</div>
+          <div class="s-body">25+ years helping businesses grow, evolve, and adapt to technology. Having worked with 1,500+ businesses across service, digital, manufacturing, engineering, and industrial sectors, he helps leadership teams understand AI in a practical, business-first way — without technical complexity or jargon.</div>
           <div class="stags">
             <span class="stag">100+ forums</span>
             <span class="stag">AI transformation</span>
@@ -586,7 +597,7 @@ body.emode .ef:focus { background: rgba(255,200,0,0.38); box-shadow: 0 0 0 2px r
       </div>
     </div>
   </div>
-  <div class="note-bar">This proposal is confidential and prepared exclusively for Sanjay Malpani / Malpani Foods.</div>
+  <div class="note-bar">This proposal is confidential and prepared exclusively for Ashish Dalia / I Knowledge Factory Pvt. Ltd.</div>
 
 </div>
 <div id="toast"></div>
@@ -611,7 +622,7 @@ function toggleEdit() {
 function buildHTML() {
   const s = document.querySelector('style').textContent;
   const b = document.getElementById('proposal').outerHTML;
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>IKF AI Masterclass — Malpani Foods</title><style>
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>IKF AI-Native Thinking Accelerator — I Knowledge Factory</title><style>
 ${s}
 #toolbar{display:none!important;}
 body{background:#fff!important;padding:0!important;}
@@ -630,7 +641,7 @@ async function copyEmail() {
   const html = buildHTML();
   try {
     const hb = new Blob([html],{type:'text/html'});
-    const tb = new Blob(['IKF AI Masterclass Proposal — Malpani Foods'],{type:'text/plain'});
+    const tb = new Blob(['IKF AI-Native Thinking Accelerator Proposal — I Knowledge Factory'],{type:'text/plain'});
     await navigator.clipboard.write([new ClipboardItem({'text/html':hb,'text/plain':tb})]);
     toast('✅ Proposal copied!\n\nOpen Gmail → Compose → click in the email body → press Ctrl+V (or Cmd+V) to paste the full formatted proposal.',true);
   } catch(e) {

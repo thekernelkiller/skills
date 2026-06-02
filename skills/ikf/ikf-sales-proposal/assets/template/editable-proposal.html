@@ -3,138 +3,397 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{TITLE}}</title>
+  <title>IKF Proposal Editor</title>
   <style>
     :root {
       --blue: #00508f;
-      --navy: #00457c;
-      --gold: #d9a300;
-      --paper: #fff;
-      --ink: #111;
-      --muted: #444;
-      --table-head: #b8cae6;
-      --table-fill: #fff2c9;
-      --line: #d7d7d7;
+      --blue-dark: #003f73;
+      --gold: #d6a200;
+      --ink: #151515;
+      --muted: #5a6570;
+      --line: #d8dde3;
+      --panel: #f6f8fb;
+      --paper: #ffffff;
+      --table-head: #b9cae6;
+      --table-fill: #fff1c9;
+      --shadow: 0 16px 50px rgba(20, 33, 48, .16);
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      background: #d9d9d9;
+      background: #d8dce1;
       color: var(--ink);
-      font: 10.5px/1.35 Calibri, Arial, sans-serif;
+      font: 11px/1.38 Calibri, Arial, sans-serif;
     }
-    .toolbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-      align-items: center;
-      padding: 10px;
-      background: rgba(245, 245, 245, .96);
-      border-bottom: 1px solid #bbb;
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
     }
-    button, select {
+
+    button,
+    select {
+      min-height: 30px;
       border: 1px solid var(--blue);
+      border-radius: 4px;
       background: var(--blue);
       color: #fff;
-      border-radius: 3px;
       padding: 6px 9px;
-      font: inherit;
       cursor: pointer;
     }
-    button.secondary, select {
+
+    button.secondary,
+    select {
       background: #fff;
       color: var(--blue);
     }
+
+    button.ghost {
+      border-color: var(--line);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    button:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--ink);
+      padding: 7px 8px;
+    }
+
+    label {
+      display: grid;
+      gap: 4px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 300px minmax(820px, 1fr);
+      min-height: 100vh;
+    }
+
+    .builder {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      padding: 14px;
+      background: #fff;
+      border-right: 1px solid #c8ced7;
+      box-shadow: 8px 0 30px rgba(20, 33, 48, .08);
+      z-index: 10;
+    }
+
+    .builder h1 {
+      margin: 0 0 4px;
+      color: var(--blue);
+      font-size: 18px;
+      line-height: 1.15;
+    }
+
+    .builder p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .builder-group {
+      display: grid;
+      gap: 10px;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .builder-group:first-of-type { border-top: 0; }
+
+    .builder-title {
+      color: var(--blue-dark);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .service-grid,
+    .actions-grid {
+      display: grid;
+      gap: 7px;
+    }
+
+    .actions-grid.horizontal {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .check-row {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 7px;
+      align-items: start;
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 400;
+      text-transform: none;
+    }
+
+    .check-row input {
+      width: auto;
+      margin: 1px 0 0;
+    }
+
+    .stage {
+      padding: 16px 24px 36px;
+      overflow: auto;
+    }
+
     .page {
       width: 794px;
       min-height: 1123px;
       margin: 12px auto;
       background: var(--paper);
-      box-shadow: 0 1px 8px rgba(0,0,0,.22);
+      box-shadow: var(--shadow);
       overflow: hidden;
       page-break-after: always;
     }
+
     .page:last-of-type { page-break-after: auto; }
+
     .brand-page {
       position: relative;
-      padding: 0;
       display: grid;
       place-items: stretch;
+      padding: 0;
     }
+
     .brand-page img {
+      display: block;
       width: 100%;
       height: 100%;
       min-height: 1123px;
       object-fit: cover;
-      display: block;
     }
+
+    .logo-page {
+      padding: 58px 72px 54px;
+    }
+
+    .logo-page h2 {
+      margin-bottom: 18px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .logo-tools {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 0 0 14px;
+      padding: 10px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    .logo-tools-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: end;
+    }
+
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid #c8c8c8;
+      background: #fff;
+    }
+
+    .logo-cell {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 104px;
+      padding: 14px;
+      border-right: 1px solid #d2d2d2;
+      border-bottom: 1px solid #d2d2d2;
+      background: #fff;
+    }
+
+    .logo-cell:nth-child(4n) { border-right: 0; }
+
+    .logo-cell img {
+      display: block;
+      max-width: 100%;
+      max-height: 72px;
+      object-fit: contain;
+    }
+
+    .logo-cell-actions {
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      display: flex;
+      gap: 4px;
+      opacity: .08;
+      transition: opacity .16s ease;
+    }
+
+    .logo-cell:hover .logo-cell-actions {
+      opacity: 1;
+    }
+
+    .logo-cell.is-selected {
+      outline: 2px solid var(--blue);
+      outline-offset: -2px;
+    }
+
+    .logo-add-cell {
+      min-height: 104px;
+      border: 2px dashed #9fb4c8;
+      background: #f8fbff;
+      color: var(--blue);
+      font-size: 26px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .logo-add-cell span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .logo-cell-actions button {
+      min-height: 20px;
+      padding: 2px 5px;
+      font-size: 9px;
+    }
+
+    .logo-file-input {
+      display: none;
+    }
+
     .cover-title {
       position: absolute;
-      top: 285px;
-      left: 250px;
-      right: 80px;
+      top: 284px;
+      left: 232px;
+      right: 74px;
       text-align: center;
+      color: #735300;
       font-size: 27px;
-      line-height: 1.25;
       font-weight: 700;
-      color: #775500;
+      line-height: 1.23;
     }
-    .cover-title .client {
+
+    .cover-title .client-token {
       display: block;
       color: var(--blue);
       font-size: 33px;
     }
+
     .content-page {
       padding: 58px 72px 54px;
     }
+
     .section {
-      margin: 0 0 22px;
+      position: relative;
+      margin: 0 0 24px;
       break-inside: avoid;
     }
-    h1, h2, h3, h4, p { margin: 0; }
+
+    .is-hidden,
+    .section.is-hidden {
+      display: none !important;
+    }
+
+    .section-controls {
+      display: flex;
+      gap: 6px;
+      justify-content: flex-end;
+      margin: 0 0 6px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
+      margin: 0;
+    }
+
     h1 {
+      margin: 0 0 19px;
       color: var(--blue);
       text-align: center;
       font-size: 18px;
-      line-height: 1.18;
-      margin-bottom: 20px;
+      line-height: 1.2;
     }
+
     h2 {
+      margin: 0 0 8px;
       color: var(--blue);
       font-size: 12px;
+      line-height: 1.22;
       text-transform: uppercase;
-      line-height: 1.2;
-      margin: 0 0 8px;
     }
+
     h3 {
+      margin: 10px 0 4px;
       color: var(--blue);
       font-size: 11px;
       line-height: 1.25;
-      margin: 10px 0 4px;
     }
+
     h4 {
+      margin: 8px 0 3px;
       color: #000;
       font-size: 10.5px;
       font-weight: 700;
-      margin: 8px 0 2px;
     }
-    p { margin-bottom: 6px; }
-    .small-note { color: var(--muted); }
+
+    p {
+      margin: 0 0 6px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+    }
+
     .bullet-list,
     .bullet-list ul {
-      list-style: none;
       margin: 0;
       padding: 0;
+      list-style: none;
     }
+
     .bullet-list li {
       position: relative;
       margin: 0 0 3px;
       padding-left: 19px;
     }
+
     .bullet-list li::before {
       content: "✓";
       position: absolute;
@@ -143,174 +402,1244 @@
       color: var(--gold);
       font-weight: 700;
     }
-    .bullet-list ul { margin-top: 2px; }
+
+    .bullet-list ul {
+      margin-top: 2px;
+    }
+
     .bullet-list ul li {
       padding-left: 17px;
       margin-bottom: 2px;
     }
+
     .bullet-list ul li::before {
       content: "○";
       color: var(--gold);
       font-size: 10px;
     }
+
     .list-tools,
     .row-tools {
       display: flex;
+      flex-wrap: wrap;
       gap: 6px;
       margin: 6px 0 10px;
     }
+
     .list-tools button,
-    .row-tools button {
-      font-size: 10px;
+    .row-tools button,
+    .section-controls button {
+      min-height: 24px;
       padding: 4px 7px;
+      font-size: 10px;
     }
+
     table {
       width: 100%;
+      margin: 10px 0 16px;
       border-collapse: collapse;
       table-layout: fixed;
-      margin: 10px 0 16px;
       break-inside: avoid;
     }
-    th, td {
+
+    th,
+    td {
       border: 1px solid #fff;
       padding: 6px;
       vertical-align: top;
       word-break: break-word;
     }
+
     th {
       background: var(--table-head);
       color: #000;
       font-weight: 700;
       text-align: center;
     }
-    td { background: var(--table-fill); }
+
+    td {
+      background: var(--table-fill);
+    }
+
     .table-title th {
       background: var(--blue);
       color: #fff;
       text-align: center;
     }
+
     .total-row td {
       background: var(--blue);
       color: #fff;
       font-weight: 700;
     }
-    .money { text-align: right; white-space: nowrap; }
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 26px;
+
+    .money {
+      text-align: right;
+      white-space: nowrap;
     }
-    [contenteditable="true"] { outline: 1px dashed transparent; border-radius: 2px; }
-    body.editing [contenteditable="true"]:hover,
-    body.editing [contenteditable="true"]:focus {
-      outline-color: rgba(0,80,143,.5);
+
+    [contenteditable="true"] {
+      outline: 1px dashed transparent;
+      border-radius: 2px;
+    }
+
+    [contenteditable="true"]:hover,
+    [contenteditable="true"]:focus {
+      outline-color: rgba(0, 80, 143, .55);
       background: #fffce8;
     }
-    body:not(.editing) .edit-only { display: none !important; }
+
+    @media (max-width: 1120px) {
+      .app { grid-template-columns: 1fr; }
+      .builder {
+        position: static;
+        height: auto;
+      }
+      .stage { padding: 12px; }
+    }
+
     @media print {
       body { background: #fff; }
-      .toolbar, .edit-only { display: none !important; }
-      .page { margin: 0; box-shadow: none; width: auto; min-height: 1123px; }
+      .builder,
+      .edit-only {
+        display: none !important;
+      }
+      .app { display: block; }
+      .stage { padding: 0; }
+      .page {
+        width: auto;
+        min-height: 1123px;
+        margin: 0;
+        box-shadow: none;
+      }
     }
   </style>
 </head>
-<body class="editing">
-  <div class="toolbar">
-    <button type="button" onclick="toggleEdit()">Edit Mode</button>
-    <button type="button" class="secondary" onclick="saveHtml()">Save HTML</button>
-    <button type="button" class="secondary" onclick="window.print()">Export PDF</button>
-    <select id="sectionJump" onchange="jumpToSection(this.value)">
-      <option value="">Jump to section</option>
-    </select>
+<body>
+  <div class="app">
+    <aside class="builder edit-only" aria-label="Proposal builder">
+      <div class="builder-group">
+        <h1>IKF Proposal Editor</h1>
+        <p>DOCX-faithful proposal components with editable defaults.</p>
+      </div>
+
+      <div class="builder-group">
+        <div class="builder-title">Typography</div>
+        <label>
+          Font family
+          <select id="fontFamilySelect" onchange="applyTypography()">
+            <option value="Calibri, Arial, sans-serif">Calibri</option>
+            <option value="Arial, Helvetica, sans-serif">Arial</option>
+            <option value="'Times New Roman', Times, serif">Times New Roman</option>
+            <option value="Georgia, serif">Georgia</option>
+            <option value="'Trebuchet MS', Arial, sans-serif">Trebuchet MS</option>
+          </select>
+        </label>
+        <label>
+          Font size
+          <select id="fontSizeSelect" onchange="applyTypography()">
+            <option value="10px">10 px</option>
+            <option value="10.5px" selected>10.5 px</option>
+            <option value="11px">11 px</option>
+            <option value="12px">12 px</option>
+            <option value="13px">13 px</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="builder-group">
+        <div class="builder-title">Included Components</div>
+        <div id="componentToggles" class="service-grid"></div>
+      </div>
+
+      <div class="builder-group">
+        <div class="builder-title">Actions</div>
+        <div class="actions-grid">
+          <select id="sectionJump" onchange="jumpToSection(this.value)">
+            <option value="">Jump to section</option>
+          </select>
+          <button type="button" class="secondary" onclick="saveHtml()">Save HTML</button>
+          <button type="button" class="secondary" onclick="window.print()">Export PDF</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="stage">
+      <div id="proposal">
+        <main class="page brand-page" data-section="Cover" data-component="cover">
+          <img src="../brand-pages/cover-base.jpeg" alt="IKF proposal cover">
+          <div class="cover-title" contenteditable="true">
+            Commercial Proposal for
+            <span class="client-token" data-client-token>ABC</span>
+          </div>
+        </main>
+
+        <main class="page brand-page" data-section="About Us" data-component="about">
+          <img src="../brand-pages/about-us-expertise.jpeg" alt="About IKF and expertise">
+        </main>
+
+        <main class="page logo-page" data-section="They Believe In Us" data-component="client-proof">
+          <h2 contenteditable="true">THEY BELIEVE IN US</h2>
+          <div class="logo-tools edit-only">
+            <div class="logo-tools-row">
+              <label>
+                Fill logo grid from category
+                <select id="logoCategorySelect"></select>
+              </label>
+              <button type="button" onclick="applyLogoCategory()">Fill Grid</button>
+            </div>
+          </div>
+          <div id="logoGrid" class="logo-grid" data-logo-grid></div>
+        </main>
+
+        <main class="page content-page" data-family="seo-ppc-smm">
+          <section class="section" data-section="Scope of Work" data-component="scope-digital">
+            <div class="section-controls edit-only"><button type="button" class="ghost" onclick="hideSection(this)">Remove Section</button></div>
+            <h2 contenteditable="true">SCOPE OF WORK</h2>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Search Engine Optimisation</li>
+              <li contenteditable="true">Social Media Management</li>
+              <li contenteditable="true">Performance Marketing</li>
+            </ul>
+            <div class="list-tools edit-only">
+              <button type="button" class="secondary" onclick="addBullet(this)">Add Bullet</button>
+              <button type="button" class="secondary" onclick="addSubBullet(this)">Add Sub-Bullet</button>
+              <button type="button" class="secondary" onclick="deleteBullet(this)">Delete Last Bullet</button>
+            </div>
+          </section>
+
+          <section class="section" data-section="SEO" data-component="seo">
+            <div class="section-controls edit-only"><button type="button" class="ghost" onclick="hideSection(this)">Remove Section</button></div>
+            <h2 contenteditable="true">SEARCH ENGINE OPTIMIZATION (SEO)</h2>
+            <h3 contenteditable="true">ON PAGE OPTIMIZATION</h3>
+            <p contenteditable="true">On-Page SEO involves optimizing various elements within the website to improve search engine visibility and user experience.</p>
+            <h3 contenteditable="true">OFF PAGE OPTIMIZATION</h3>
+            <p contenteditable="true">Off-Page SEO focuses on building credibility, authority, and backlinks to improve the website's ranking and online presence.</p>
+            <h3 contenteditable="true">PLAN</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Website Analysis &amp; Keyword Research<ul><li contenteditable="true">Keyword Research, Keyword Finalization in mutual discussion with Client</li></ul></li>
+              <li contenteditable="true">On Page Optimization<ul>
+                <li contenteditable="true">Baseline Keyword Ranking</li>
+                <li contenteditable="true">HTTPS (SSL) Certificate</li>
+                <li contenteditable="true">URL Canonicalization</li>
+                <li contenteditable="true">Set-up Google Search Console</li>
+                <li contenteditable="true">Website Pages Meta Tag Optimization (Title, Description, Keywords) as per the finalized keywords</li>
+                <li contenteditable="true">Website Content Suggestion and Optimization as per the Finalized Keywords</li>
+                <li contenteditable="true">XML Sitemap Monitoring, Robots.txt Optimization, page redirection suggestions and duplicate content checks</li>
+                <li contenteditable="true">Call to Action Check, Navigation Check, Google Analysis Tracking and Image Optimization</li>
+                <li contenteditable="true">Internal Linking, page speed optimization, CSS optimization and JS optimization</li>
+                <li contenteditable="true">Footer Optimization Suggestion, Schema Markup Suggestions and Blog Topics Suggestions</li>
+              </ul></li>
+              <li contenteditable="true">Off Page Optimization<ul>
+                <li contenteditable="true">Social Bookmarking</li>
+                <li contenteditable="true">Image Submission*</li>
+                <li contenteditable="true">Infographic Submission*</li>
+                <li contenteditable="true">PPT Submission*</li>
+                <li contenteditable="true">Document Sharing*</li>
+                <li contenteditable="true">Video Submission*; content to be provided by client where applicable</li>
+              </ul></li>
+              <li contenteditable="true">Blogging Activities<ul>
+                <li contenteditable="true" data-digital-only>The blog writing will commence after 1st month of engagement.</li>
+                <li contenteditable="true" data-digital-only>Blogs to be written: 2 blogs, 400-500 words each, per month after 1st month of engagement.</li>
+                <li contenteditable="true" data-website-only>Blogs to be written for India: 3 blogs, 400-500 words each, per month after 1st month of engagement.</li>
+                <li contenteditable="true" data-website-only>Blogs to be written for Middle East: 1 blog, 400-500 words, per month after 1st month of engagement.</li>
+                <li contenteditable="true">Technical content for blog writing will be provided by the client. Blog topics to be finalised on mutual basis with client involvement.</li>
+                <li contenteditable="true">If a blog is not approved within the same month of submission, it will be carried forward to the following month. It will not be considered or replaced beyond that period.</li>
+              </ul></li>
+              <li contenteditable="true">Reports and Statistics<ul><li contenteditable="true">Monthly Progress Report</li></ul></li>
+              <li contenteditable="true">Exclusions &amp; Limitations<ul>
+                <li contenteditable="true">Website Development &amp; Fixes: We do not make direct changes to the website code unless covered in AMC.</li>
+                <li contenteditable="true">Website Hosting, Maintenance: We are not responsible for downtime, hosting issues, or server-side problems unless managed by IKF.</li>
+                <li contenteditable="true">Content Writing: Website content creation is not included unless specified.</li>
+                <li contenteditable="true">UI/UX or Design Changes: No design/UI fixes will be done; suggestions may be provided where applicable.</li>
+                <li contenteditable="true">Access Restrictions: Delays or inaccuracies may occur if admin access is not provided on time.</li>
+                <li contenteditable="true">Result Guarantees: SEO is a long-term process and results depend on competition, algorithm changes, website structure and approvals.</li>
+                <li contenteditable="true">Legacy URL/Redirect Management is not part of scope unless AMC is handled by IKF.</li>
+                <li contenteditable="true">Blog uploading or formatting blogs on CMS will not be handled unless covered under AMC.</li>
+                <li contenteditable="true">Designing banners is not part of IKF's scope and will be charged at actuals if required.</li>
+              </ul></li>
+            </ul>
+            <div class="list-tools edit-only">
+              <button type="button" class="secondary" onclick="addBullet(this)">Add Bullet</button>
+              <button type="button" class="secondary" onclick="addSubBullet(this)">Add Sub-Bullet</button>
+              <button type="button" class="secondary" onclick="deleteBullet(this)">Delete Last Bullet</button>
+            </div>
+          </section>
+
+          <section class="section" data-section="Social Media Management" data-component="smm">
+            <div class="section-controls edit-only"><button type="button" class="ghost" onclick="hideSection(this)">Remove Section</button></div>
+            <h2 contenteditable="true">SOCIAL MEDIA MANAGEMENT</h2>
+            <h3 contenteditable="true">Platforms</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Instagram</li>
+              <li contenteditable="true">Facebook</li>
+              <li contenteditable="true">LinkedIn</li>
+            </ul>
+            <h3 contenteditable="true">Social Media Deliverables</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Develop a monthly content calendar featuring promotional posts, industry news and multimedia content.</li>
+              <li contenteditable="true">Static Image Posts: visually appealing creatives with compelling captions as per mandate.</li>
+              <li contenteditable="true">Reels: engaging short-form videos, maximum up to 20 seconds, as per mandate.</li>
+              <li contenteditable="true">Story Updates: stories provided by the client are ready for upload and remain unchanged unless the mandate specifies design work.</li>
+              <li contenteditable="true">Comment &amp; Message Management: prompt responses to user queries, comments and DMs. ORM will be done once during any working day.</li>
+              <li contenteditable="true">User-Generated Content Sharing via Stories when tagged by the user.</li>
+            </ul>
+            <h3 contenteditable="true">Exclusions</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Customization of Stories with polls, quizzes, ask-me-anything or similar engagement activities.</li>
+              <li contenteditable="true">Manually sending follow requests to users for the page.</li>
+              <li contenteditable="true">Requesting users to tag the page when they check in at a location.</li>
+              <li contenteditable="true">Asking users who share positive reviews on social media to post the same on Google My Business.</li>
+              <li contenteditable="true">Past inquiries, messages or comments received before the mandate start date will not be covered.</li>
+            </ul>
+            <h3 contenteditable="true">Page &amp; Profile Optimization</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Profile &amp; Cover Image Management: designing a banner once every six months.</li>
+              <li contenteditable="true">About Section &amp; CTA Optimization.</li>
+              <li contenteditable="true">Hashtag Strategy Implementation.</li>
+              <li contenteditable="true">Pinned Posts as per mutually agreed strategy.</li>
+              <li contenteditable="true">Highlights creation and cover design reviewed once every six months, maximum 8 highlights.</li>
+            </ul>
+            <h3 contenteditable="true">Analytics &amp; Reporting</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Monthly Performance Report for posts and reels designed by IKF, shared by the 5th of the following month.</li>
+              <li contenteditable="true">Monthly review strategy and meeting to take place online only.</li>
+              <li contenteditable="true">Customized reporting beyond IKF standard format will be charged at actuals.</li>
+              <li contenteditable="true">No reporting of UGC to be shared by IKF.</li>
+              <li contenteditable="true">Visiting Client Premises for monthly review is excluded.</li>
+            </ul>
+            <h3 contenteditable="true">Working Hours</h3>
+            <p contenteditable="true">Our regular working hours are Monday to Friday, 10:00 AM to 6:00 PM. We observe weekly offs on Saturdays and Sundays.</p>
+            <h3 contenteditable="true">KEY MEASURABLE CRITERIA</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Improvisation in the existing digital presence across the platforms.</li>
+              <li contenteditable="true">Reaching the targeted audience and geographies.</li>
+              <li contenteditable="true">Increase in followers, brand building and page engagements through paid campaigns as applicable.</li>
+            </ul>
+            <div class="two-col">
+              <div>
+                <h3 contenteditable="true">OUR RESPONSIBILITIES</h3>
+                <ul class="bullet-list" data-list>
+                  <li contenteditable="true">Get a better understanding of the requirement, timeline and deliverables.</li>
+                  <li contenteditable="true">Prepare the action plan and share the milestones.</li>
+                  <li contenteditable="true">Coordinate with Client for Social Media Strategy.</li>
+                  <li contenteditable="true">Execute - Approve - Post.</li>
+                </ul>
+              </div>
+              <div>
+                <h3 contenteditable="true">CLIENT RESPONSIBILITIES</h3>
+                <ul class="bullet-list" data-list>
+                  <li contenteditable="true">Provide timely feedback and approvals on creatives and copies.</li>
+                  <li contenteditable="true">Provide Brand Guidelines Document.</li>
+                  <li contenteditable="true">Provide content in open files, DOC and DOCX, specifications, PDF documents and images as required.</li>
+                  <li contenteditable="true">Provide high resolution product images, specifications, logos and demo videos if any.</li>
+                  <li contenteditable="true">Approval on the monthly content bank.</li>
+                  <li contenteditable="true">Providing access of all the desired channels.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="list-tools edit-only">
+              <button type="button" class="secondary" onclick="addBullet(this)">Add Bullet</button>
+              <button type="button" class="secondary" onclick="addSubBullet(this)">Add Sub-Bullet</button>
+              <button type="button" class="secondary" onclick="deleteBullet(this)">Delete Last Bullet</button>
+            </div>
+          </section>
+
+          <section class="section" data-section="Performance Marketing" data-component="ppc">
+            <div class="section-controls edit-only"><button type="button" class="ghost" onclick="hideSection(this)">Remove Section</button></div>
+            <h2 contenteditable="true">Performance Marketing</h2>
+            <h3 contenteditable="true">Objective</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Increase brand reach and awareness across target audiences.</li>
+              <li contenteditable="true">Generate quality leads.</li>
+              <li contenteditable="true">Optimize media spends through real-time data and performance tracking.</li>
+              <li contenteditable="true">Establish a full-funnel strategy across awareness, consideration and conversion stages.</li>
+            </ul>
+            <h3 contenteditable="true">Channel-Wise Strategy &amp; Deliverables</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Campaign Strategy: Google &amp; Meta Ads.</li>
+              <li contenteditable="true">Funnel-based approach: Awareness to Consideration to Conversion.</li>
+              <li contenteditable="true">Custom audiences based on interest, behaviour, lookalikes and retargeting pools.</li>
+              <li contenteditable="true">Dynamic ad formats testing for performance.</li>
+              <li contenteditable="true">Campaign strategy and targeting plan.</li>
+              <li contenteditable="true">Creative design at actuals.</li>
+              <li contenteditable="true">Ad copywriting aligned with CTA and audience funnel stage.</li>
+              <li contenteditable="true">Pixel setup and custom events tracking if applicable.</li>
+              <li contenteditable="true">Ongoing A/B testing and optimization.</li>
+              <li contenteditable="true">Monthly performance reporting.</li>
+            </ul>
+            <div class="two-col">
+              <div>
+                <h3 contenteditable="true">OUR RESPONSIBILITIES</h3>
+                <ul class="bullet-list" data-list>
+                  <li contenteditable="true">Development of a tailored ad strategy based on business goals and target audience.</li>
+                  <li contenteditable="true">Research and identification of target audience segments.</li>
+                  <li contenteditable="true">Creation of high-quality ad creatives and ad copywriting.</li>
+                  <li contenteditable="true">Setup and daily management of ad campaigns.</li>
+                  <li contenteditable="true">A/B testing of ad creatives and targeting options.</li>
+                  <li contenteditable="true">Efficient allocation and management of ad spend.</li>
+                  <li contenteditable="true">Monthly performance reports and recommendations.</li>
+                  <li contenteditable="true">Competitor analysis.</li>
+                  <li contenteditable="true">Custom Audiences and Lookalike Audiences if applicable.</li>
+                </ul>
+              </div>
+              <div>
+                <h3 contenteditable="true">CLIENT RESPONSIBILITIES</h3>
+                <ul class="bullet-list" data-list>
+                  <li contenteditable="true">Approval of the plan, milestones and targeting.</li>
+                  <li contenteditable="true">Providing expectations, benchmarking and requirements for targeting.</li>
+                  <li contenteditable="true">Providing timely feedback and approvals on targeting, conversion status and outcome feedback.</li>
+                  <li contenteditable="true">Access to Meta Business Manager, Google Ads and LinkedIn Campaign Manager as per platform scope.</li>
+                  <li contenteditable="true">Creative assets or brand guidelines if available.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="list-tools edit-only">
+              <button type="button" class="secondary" onclick="addBullet(this)">Add Bullet</button>
+              <button type="button" class="secondary" onclick="addSubBullet(this)">Add Sub-Bullet</button>
+              <button type="button" class="secondary" onclick="deleteBullet(this)">Delete Last Bullet</button>
+            </div>
+          </section>
+
+          <section class="section" data-section="Commercial Proposal" data-component="commercial-digital">
+            <div class="section-controls edit-only"><button type="button" class="ghost" onclick="hideSection(this)">Remove Section</button></div>
+            <h2 contenteditable="true">COMMERCIAL PROPOSAL</h2>
+            <table data-table="smm-commercial">
+              <thead>
+                <tr class="table-title"><th colspan="5">Social Media Management - <span data-client-token>ABC</span></th></tr>
+                <tr><th>Sr.no</th><th>Particulars</th><th>Approx. Platforms/Creatives</th><th>Cost / Unit</th><th>Cost/Month</th></tr>
+              </thead>
+              <tbody>
+                <tr><td contenteditable="true">1</td><td contenteditable="true">Social Media Page Management Platforms: Instagram, Facebook, LinkedIn. Develop platform-specific monthly content calendars, competitor research, online reputation response and profile management.</td><td contenteditable="true">3</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">2</td><td contenteditable="true">Creative Design &amp; Ideation - Static Posts with content ideation, competitor benchmarking, design and captions.</td><td contenteditable="true">4</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">3</td><td contenteditable="true">Illustrative Reels - Graphical Video Posts using institute/product/stock imagery with graphical elements, up to 20 seconds per reel.</td><td contenteditable="true">4</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">4</td><td contenteditable="true">Reels Shooting &amp; Editing: video posts shot with creative direction and general script writing. On-site visits if in Pune; model and studio cost at actuals if required.</td><td contenteditable="true">4</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr class="total-row"><td colspan="4" contenteditable="true">Total Monthly Charges :</td><td class="money" contenteditable="true">₹</td></tr>
+              </tbody>
+            </table>
+            <div class="row-tools edit-only"><button type="button" class="secondary" onclick="addTableRow(this)">Add Row</button><button type="button" class="secondary" onclick="deleteTableRow(this)">Delete Last Row</button></div>
+
+            <table data-table="media-plan">
+              <thead>
+                <tr class="table-title"><th colspan="5">Tentative Performance Media Plan</th></tr>
+                <tr><th>Platform</th><th>Ad Formats</th><th>Total Budget</th><th>Leads</th><th>CPL</th></tr>
+              </thead>
+              <tbody>
+                <tr><td contenteditable="true">Google Search (Leadgen)</td><td contenteditable="true">Responsive Search Ads</td><td class="money" contenteditable="true">₹</td><td contenteditable="true"></td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">Meta (Leadgen)</td><td contenteditable="true">Static/Carousel/Video Ads</td><td class="money" contenteditable="true">₹</td><td contenteditable="true"></td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">Meta (Branding)</td><td contenteditable="true">Static/Carousel/Video Ads</td><td class="money" contenteditable="true">₹</td><td contenteditable="true">-</td><td contenteditable="true">-</td></tr>
+                <tr class="total-row"><td contenteditable="true">Total</td><td></td><td class="money" contenteditable="true">₹</td><td contenteditable="true"></td><td class="money" contenteditable="true">₹</td></tr>
+              </tbody>
+            </table>
+            <div class="row-tools edit-only"><button type="button" class="secondary" onclick="addTableRow(this)">Add Row</button><button type="button" class="secondary" onclick="deleteTableRow(this)">Delete Last Row</button></div>
+
+            <table data-table="ppc-commercial">
+              <thead>
+                <tr class="table-title"><th colspan="5">Performance Marketing - <span data-client-token>ABC</span></th></tr>
+                <tr><th>Sr No</th><th>Particulars</th><th>Approx. Units</th><th>Cost / Unit</th><th>Cost / Month</th></tr>
+              </thead>
+              <tbody>
+                <tr><td contenteditable="true">1</td><td contenteditable="true">Performance Marketing Media Charges: Google &amp; Meta for enquiry generation. Fees paid to third-party platforms for media advertising.</td><td contenteditable="true">1</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">2</td><td contenteditable="true">Performance Marketing Media Charges: Meta for reach and engagement. Fees paid to third-party platforms for media advertising.</td><td contenteditable="true">1</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">3</td><td contenteditable="true">Performance Marketing and Campaign Execution (IKF Retainer Fees): 20% of media spends or minimum retainer, including strategy, audience analysis, setup, optimization and reporting.</td><td contenteditable="true">1</td><td contenteditable="true">20%</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">4</td><td contenteditable="true">Landing Page Design &amp; Development - One-Time. Clean minimal UI/UX aligned with current website design. Up to 3 complimentary stock images; add-on images at Rs 500 per image.</td><td contenteditable="true">1</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr class="total-row"><td colspan="4" contenteditable="true">Total Media Spend per month:</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr class="total-row"><td colspan="4" contenteditable="true">Total IKF Monthly Retainer for Ad Campaign:</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr class="total-row"><td colspan="4" contenteditable="true">Total One Time:</td><td class="money" contenteditable="true">₹</td></tr>
+              </tbody>
+            </table>
+            <div class="row-tools edit-only"><button type="button" class="secondary" onclick="addTableRow(this)">Add Row</button><button type="button" class="secondary" onclick="deleteTableRow(this)">Delete Last Row</button></div>
+
+            <table data-table="ad-creatives">
+              <thead>
+                <tr class="table-title"><th colspan="3">AD Creatives - At actuals (in case SMM is handled by IKF, no extra charges)</th></tr>
+                <tr><th>Sr No</th><th>Particulars</th><th>Cost / Unit</th></tr>
+              </thead>
+              <tbody>
+                <tr><td contenteditable="true">1</td><td contenteditable="true">Designing Static Creatives &amp; Ideation: visually aligned static graphics for paid ad campaigns.</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">2</td><td contenteditable="true">Illustrative Meta Reel Creation and Designing: graphical reels using stock images and raw images/videos provided by client, up to 30 seconds max.</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">3</td><td contenteditable="true">Carousel Static Posts, up to 5 slides each.</td><td class="money" contenteditable="true">₹</td></tr>
+              </tbody>
+            </table>
+            <div class="row-tools edit-only"><button type="button" class="secondary" onclick="addTableRow(this)">Add Row</button><button type="button" class="secondary" onclick="deleteTableRow(this)">Delete Last Row</button></div>
+
+            <table data-table="seo-commercial">
+              <thead>
+                <tr class="table-title"><th colspan="5">SEO - <span data-client-token>ABC</span></th></tr>
+                <tr><th>Sr.no</th><th>Particulars</th><th>Approx Units</th><th>Cost / Unit</th><th>Cost/Month</th></tr>
+              </thead>
+              <tbody>
+                <tr><td contenteditable="true">1</td><td contenteditable="true">Search Engine Optimisation + Generative Engine Optimisation: GEO focuses on optimizing website content and structure for visibility across generative AI-driven search and discovery platforms. SEO includes on-page and off-page optimisation with selected keywords.</td><td contenteditable="true">30</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr class="total-row"><td colspan="4" contenteditable="true">Total Monthly Charges :</td><td class="money" contenteditable="true">₹</td></tr>
+              </tbody>
+            </table>
+            <div class="row-tools edit-only"><button type="button" class="secondary" onclick="addTableRow(this)">Add Row</button><button type="button" class="secondary" onclick="deleteTableRow(this)">Delete Last Row</button></div>
+          </section>
+
+          <section class="section" data-section="Terms and Conditions" data-component="terms-digital">
+            <div class="section-controls edit-only"><button type="button" class="ghost" onclick="hideSection(this)">Remove Section</button></div>
+            <h2 contenteditable="true">TERMS &amp; CONDITIONS</h2>
+            <h3 contenteditable="true">PAYMENT TERMS</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">100% monthly payment advance against the Invoice.</li>
+              <li contenteditable="true">Monthly advance payment on or before 5th day of every month on raise of invoice.</li>
+              <li contenteditable="true">Invoice not paid by due date will carry interest @ 18% P.A.</li>
+              <li contenteditable="true">If payment is done using credit card, additional charges if any to be borne by client.</li>
+              <li contenteditable="true">GST @ 18.00% applicable.</li>
+              <li contenteditable="true">Payment to be drawn in favor of I Knowledge Factory Pvt. Ltd.</li>
+              <li contenteditable="true">GSTIN: 27AAACI9588A1ZF</li>
+              <li contenteditable="true">PAN: AAACI9588A</li>
+              <li contenteditable="true">Contract Duration: 12 months</li>
+            </ul>
+            <h3 contenteditable="true">GENERAL TERMS</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">I Knowledge Factory Pvt. Ltd. will carry out work within 7 days where an agreement is provided by email or PO along with advance payment.</li>
+              <li contenteditable="true">This commercial is valid for 7 days from the proposal date.</li>
+              <li contenteditable="true">I Knowledge Factory Pvt. Ltd. cannot take responsibility for copyright infringements caused by materials submitted by the client.</li>
+              <li contenteditable="true">Any additional platforms will be charged additionally at Rs. 5,000 per month per platform.</li>
+              <li contenteditable="true">Additional creative assets not included in the units mentioned above will be charged at the standard per-unit rate.</li>
+              <li contenteditable="true">Maximum 2-3 iterations per post; additional changes will be charged Rs. 500 per post.</li>
+              <li contenteditable="true">Creatives will be shared in PNG or JPG format only. Open file formats of social media creative assets will not be shared.</li>
+              <li contenteditable="true">Monthly meetings are to take place only on virtual basis.</li>
+              <li contenteditable="true">Blogs are 400-500 words each; any blog beyond 500 words will be counted as an additional blog or charged at Rs. 7 per word.</li>
+              <li contenteditable="true">Designing banners is not part of IKF's scope and will be charged at actuals if required.</li>
+            </ul>
+            <h3 contenteditable="true">IMAGES &amp; VISUAL ASSETS POLICY</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">IKF maintains a corporate Shutterstock account for licensed stock assets.</li>
+              <li contenteditable="true">Stock images remain the property of Shutterstock, are licensed and not sold, and cannot be resold, redistributed or transferred to third parties.</li>
+              <li contenteditable="true">AI-generated visuals are created using third-party AI platforms that permit commercial usage. Ownership exclusivity is not guaranteed.</li>
+              <li contenteditable="true">Editable prompts, source files or generation history are not included.</li>
+              <li contenteditable="true">This engagement is strictly for social media marketing. Client receives commercial usage rights for social media only.</li>
+            </ul>
+            <h3 contenteditable="true">VALIDITY, TERMINATION AND REFUND POLICY</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Engagement duration is valid for 12 months from receipt of PO.</li>
+              <li contenteditable="true">Agency reserves the right to hold the work if payments are delayed.</li>
+              <li contenteditable="true">Client would be charged for the period where there was delay due to no response, no approval or no raw content from the Client.</li>
+              <li contenteditable="true">Termination communication should be made via email at least 30 days prior to service expiry or the next billing cycle.</li>
+              <li contenteditable="true">All retainer-based services, including PPC, are planned, staffed and executed monthly. Once the service period has commenced, fees paid for that month are non-refundable.</li>
+              <li contenteditable="true">Outstation travel, accommodation and incidental charges are at actuals.</li>
+              <li contenteditable="true">Video production and anything beyond the proposal scope will be charged at actuals.</li>
+              <li contenteditable="true">IKF will have reasonable right to publicize its involvement in the project, except information prohibited by confidentiality clause.</li>
+              <li contenteditable="true">These terms and conditions supersede any previously stated terms and conditions in the proposal.</li>
+            </ul>
+            <div class="list-tools edit-only">
+              <button type="button" class="secondary" onclick="addBullet(this)">Add Bullet</button>
+              <button type="button" class="secondary" onclick="addSubBullet(this)">Add Sub-Bullet</button>
+              <button type="button" class="secondary" onclick="deleteBullet(this)">Delete Last Bullet</button>
+            </div>
+          </section>
+        </main>
+
+        <main class="page content-page" data-family="brandkit-website-amc-hosting-seo">
+          <section class="section" data-section="Scope of Work" data-component="scope-website">
+            <div class="section-controls edit-only"><button type="button" class="ghost" onclick="hideSection(this)">Remove Section</button></div>
+            <h2 contenteditable="true">SCOPE OF WORK</h2>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Branding Kit</li>
+              <li contenteditable="true">Website Designing and Development</li>
+              <li contenteditable="true">Annual Website Maintenance &amp; Website Hosting</li>
+              <li contenteditable="true">Search Engine Optimisation &amp; Paid PR</li>
+            </ul>
+            <div class="list-tools edit-only">
+              <button type="button" class="secondary" onclick="addBullet(this)">Add Bullet</button>
+              <button type="button" class="secondary" onclick="addSubBullet(this)">Add Sub-Bullet</button>
+              <button type="button" class="secondary" onclick="deleteBullet(this)">Delete Last Bullet</button>
+            </div>
+          </section>
+
+          <section class="section" data-section="Website Designing and Development" data-component="website">
+            <div class="section-controls edit-only"><button type="button" class="ghost" onclick="hideSection(this)">Remove Section</button></div>
+            <h2 contenteditable="true">WEBSITE DESIGNING AND DEVELOPMENT</h2>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Create website theme, layout and design in PSD format.</li>
+              <li contenteditable="true">Prioritize better user interface (UI) and user experience (UX).</li>
+              <li contenteditable="true">Design vibrant, customer-centric interfaces with easy, direct navigation and on-page breadcrumbs.</li>
+              <li contenteditable="true">Ensure design is optimized for fast web page load times and includes call-to-action oriented page structure.</li>
+            </ul>
+            <h3 contenteditable="true">RESOURCES IDENTIFIED</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">UI/UX Designer (Sr.)</li>
+              <li contenteditable="true">Graphic Designer (Sr.)</li>
+              <li contenteditable="true">Website Developer (Sr.)</li>
+              <li contenteditable="true">Business Analyst</li>
+              <li contenteditable="true">Testing and QC Engineer</li>
+              <li contenteditable="true">Server Administrator</li>
+              <li contenteditable="true">Content Writer/Copy Writer</li>
+            </ul>
+            <h3 contenteditable="true">OUR RESPONSIBILITIES</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Project Understanding: fully understand requirements, timelines and deliverables; develop and share a detailed action plan with milestones.</li>
+              <li contenteditable="true">Design and Development: proceed with Next.js development post design approval; focus on website loading speed, multimedia optimization and mobile-first compatibility.</li>
+              <li contenteditable="true">Customization and Plugins: use custom design and Next.js with Headless WordPress CMS; client covers specialized or third-party plugin costs.</li>
+              <li contenteditable="true">SEO and Optimization: basic SEO elements, HTML, CSS and JS optimization will be implemented where opted by client.</li>
+              <li contenteditable="true">Post-Launch Support: provide full support for 30 days post-launch for technical issues or assistance.</li>
+            </ul>
+            <h3 contenteditable="true">CLIENT RESPONSIBILITIES</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Domain and Hosting Access: provide credentials or details for domain registration and hosting setup if already procured.</li>
+              <li contenteditable="true">Brand Guidelines and Assets: share brand guidelines, logos, fonts and design elements.</li>
+              <li contenteditable="true">Timely Communication: respond promptly to queries and updates to avoid project delays.</li>
+              <li contenteditable="true">Access to third-party tools: share credentials or access for payment gateways, analytics, CRM integrations or other required tools.</li>
+              <li contenteditable="true">Legal Compliance: ensure compliance with applicable laws and provide Terms &amp; Conditions and Privacy Policy where required.</li>
+              <li contenteditable="true">Training Coordination and post-launch support coordination through assigned points of contact.</li>
+              <li contenteditable="true">Content Supply: provide necessary text, images, PDFs and open files in supported formats.</li>
+              <li contenteditable="true">Approval and Feedback: approve project plan, milestones and designs as required.</li>
+            </ul>
+            <div class="list-tools edit-only">
+              <button type="button" class="secondary" onclick="addBullet(this)">Add Bullet</button>
+              <button type="button" class="secondary" onclick="addSubBullet(this)">Add Sub-Bullet</button>
+              <button type="button" class="secondary" onclick="deleteBullet(this)">Delete Last Bullet</button>
+            </div>
+          </section>
+
+          <section class="section" data-section="Website Process" data-component="website-process">
+            <div class="section-controls edit-only"><button type="button" class="ghost" onclick="hideSection(this)">Remove Section</button></div>
+            <h2 contenteditable="true">Our Process (Website Design and Development Roadmap)</h2>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Initial Kick-Off Meeting: a handshake meeting with Points of Contact to finalize project details.</li>
+              <li contenteditable="true">Sitemap Finalization: define website structure based on agreed sitemap and requirements.</li>
+              <li contenteditable="true">Planning: requirement gathering, business understanding, wireframes and storyboards for prototypes.</li>
+              <li contenteditable="true">Content: outline raw content; content writing and proofreading services; client's signoff required before proceeding.</li>
+              <li contenteditable="true">Design: creation of design prototypes including Landing Page, Home Page and Product Pages; art design for inner pages followed by sign-off.</li>
+              <li contenteditable="true">Development: responsive desktop and mobile coding, browser/device compatibility and website optimization.</li>
+              <li contenteditable="true">Testing: cross-platform and browser testing, module testing, bug fixing and final signoff.</li>
+              <li contenteditable="true">Launch: pre-launch server setup, final review, post-launch monitoring and testing.</li>
+              <li contenteditable="true">Training: provide CMS training to the client's team for managing content post-launch.</li>
+            </ul>
+            <div class="list-tools edit-only">
+              <button type="button" class="secondary" onclick="addBullet(this)">Add Bullet</button>
+              <button type="button" class="secondary" onclick="addSubBullet(this)">Add Sub-Bullet</button>
+              <button type="button" class="secondary" onclick="deleteBullet(this)">Delete Last Bullet</button>
+            </div>
+          </section>
+
+          <section class="section" data-section="Annual Website Maintenance" data-component="amc-hosting">
+            <div class="section-controls edit-only"><button type="button" class="ghost" onclick="hideSection(this)">Remove Section</button></div>
+            <h2 contenteditable="true">ANNUAL WEBSITE MAINTENANCE</h2>
+            <h3 contenteditable="true">WHY WEBSITE MAINTENANCE</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Websites with higher update frequency have higher chances to rank over major search engines.</li>
+              <li contenteditable="true">Website content loses relevance quickly without updates.</li>
+              <li contenteditable="true">To update or add supplementary information in the form of content and images.</li>
+              <li contenteditable="true">To act in response to visitor remarks or recommendations.</li>
+              <li contenteditable="true">To correct bugs and design problems.</li>
+              <li contenteditable="true">New customer acquisition and customer retention.</li>
+              <li contenteditable="true">Non-maintenance of site can create doubt about credibility in a fast-changing world.</li>
+            </ul>
+            <h3 contenteditable="true">MODUS OPERANDI</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">IKF assigns one dedicated Maintenance Manager for the website maintenance requirement.</li>
+              <li contenteditable="true">Client shares website hosting control panel, CMS administrator control panel, FTP details and single point of contact.</li>
+              <li contenteditable="true">Share website maintenance related work to amc@ikf.co.in.</li>
+              <li contenteditable="true">Maintenance Manager reverts with expected completion days and tentative AMC hours to be consumed.</li>
+              <li contenteditable="true">On confirmation, Maintenance Manager gets the work done and shares the URL for approval.</li>
+              <li contenteditable="true">IKF office will be open 9:30 AM to 6:30 PM Monday to Friday excluding official holidays.</li>
+            </ul>
+            <table data-table="amc-inclusions">
+              <thead>
+                <tr class="table-title"><th colspan="3">What's Included in IKF's Website AMC</th></tr>
+                <tr><th>Sr. No.</th><th>Category</th><th>Services</th></tr>
+              </thead>
+              <tbody>
+                <tr><td contenteditable="true">1</td><td contenteditable="true">Security &amp; Updates</td><td contenteditable="true">Plugin/theme updates, malware scans and removal, SSL certificate monitoring.</td></tr>
+                <tr><td contenteditable="true">2</td><td contenteditable="true">Content Changes</td><td contenteditable="true">Uploading new content/images provided by client, updating banners/blogs/case studies, minor text/layout changes, creation of a new page by replicating existing layout.</td></tr>
+                <tr><td contenteditable="true">3</td><td contenteditable="true">Performance Monitoring</td><td contenteditable="true">Monthly health checks, uptime monitoring, fixing broken links, basic loading speed optimization, image compression and caching management.</td></tr>
+                <tr><td contenteditable="true">4</td><td contenteditable="true">Technical Support</td><td contenteditable="true">Bug/layout/functionality fixes, form validation checks, CTA/button functionality and resolution of minor website functionality issues.</td></tr>
+                <tr><td contenteditable="true">5</td><td contenteditable="true">Browser &amp; Device Compatibility</td><td contenteditable="true">Ensuring website runs smoothly across latest browsers and devices.</td></tr>
+                <tr><td contenteditable="true">6</td><td contenteditable="true">Database &amp; Code Maintenance</td><td contenteditable="true">Database optimization and clean-up, removal of unused plugins/themes and minor code optimization for stability.</td></tr>
+                <tr><td contenteditable="true">7</td><td contenteditable="true">Email &amp; Form Management</td><td contenteditable="true">Testing contact forms, spam protection, CAPTCHA checks and CRM/email integration health checks.</td></tr>
+                <tr><td contenteditable="true">8</td><td contenteditable="true">Emergency Support</td><td contenteditable="true">Guidance for website functionality, email/phone support for minor issues, priority support for website downtime and post-incident diagnostics.</td></tr>
+              </tbody>
+            </table>
+            <div class="row-tools edit-only"><button type="button" class="secondary" onclick="addTableRow(this)">Add Row</button><button type="button" class="secondary" onclick="deleteTableRow(this)">Delete Last Row</button></div>
+            <h3 contenteditable="true">EXCLUSIONS (AMC)</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Major design overhauls or complete website redesign.</li>
+              <li contenteditable="true">Custom feature development or third-party API integrations.</li>
+              <li contenteditable="true">SEO services; it is a separate service.</li>
+              <li contenteditable="true">Emergency recovery of hacked or severely compromised websites.</li>
+              <li contenteditable="true">Advanced marketing-related website updates such as landing page creation for campaigns.</li>
+            </ul>
+          </section>
+
+          <section class="section" data-section="SEO" data-component="seo-clone-target">
+            <div class="section-controls edit-only"><button type="button" class="ghost" onclick="hideSection(this)">Remove Section</button></div>
+            <h2 contenteditable="true">SEARCH ENGINE OPTIMIZATION (SEO)</h2>
+            <p class="muted" contenteditable="true">Use the SEO component from the PPC/SEO/SMM family as the default SEO scope. In this family, the blog quantities default to India and Middle East lines.</p>
+          </section>
+
+          <section class="section" data-section="Commercial Proposal" data-component="commercial-website">
+            <div class="section-controls edit-only"><button type="button" class="ghost" onclick="hideSection(this)">Remove Section</button></div>
+            <h2 contenteditable="true">COMMERCIAL PROPOSAL</h2>
+            <table data-table="branding-commercial">
+              <thead>
+                <tr class="table-title"><th colspan="4">(A) Branding Media Kit - One Time</th></tr>
+                <tr><th>Sr No.</th><th>Particulars</th><th>Approx. Units</th><th>Cost / Unit</th></tr>
+              </thead>
+              <tbody>
+                <tr><td contenteditable="true">1</td><td contenteditable="true">All-Inclusive Branding Kit Package: logo design, visiting card design, letterhead design, standard envelope design, tagline, email signature template and final assets in usable/printable formats.</td><td contenteditable="true">1</td><td class="money" contenteditable="true">₹1,00,000.00</td></tr>
+                <tr class="total-row"><td colspan="3" contenteditable="true">Total Charges :</td><td class="money" contenteditable="true">₹1,00,000.00</td></tr>
+              </tbody>
+            </table>
+            <div class="row-tools edit-only"><button type="button" class="secondary" onclick="addTableRow(this)">Add Row</button><button type="button" class="secondary" onclick="deleteTableRow(this)">Delete Last Row</button></div>
+
+            <table data-table="website-commercial">
+              <thead>
+                <tr class="table-title"><th colspan="5">(B) Website Design and Development: <span data-client-token>ABC</span></th></tr>
+                <tr><th>Sr No</th><th>Particulars</th><th>Approx. Units</th><th>Cost / Unit (INR)</th><th>Cost (INR)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td contenteditable="true">1</td><td contenteditable="true">Website Designing &amp; Ideation: research and discovery, ideation, information architecture, wireframing/prototyping, visual design, UX design and UI design.</td><td contenteditable="true">1</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">2</td><td contenteditable="true">Headless CMS Architecture with Next.js SSR and MySQL Integration, including responsive frontend, Headless WordPress CMS, SSR frontend and API-based data communication.</td><td contenteditable="true">1</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">3</td><td contenteditable="true">Images from Shutterstock: 10 complimentary licensed corporate images; extra images at Rs 500 each.</td><td contenteditable="true">1</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">4</td><td contenteditable="true">Inner and Subsequent pages Data Placement and Development.</td><td contenteditable="true">12</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">5</td><td contenteditable="true">Enquiry Forms: Contact Us and Career.</td><td contenteditable="true">2</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">6</td><td contenteditable="true">Product Module Development: category management, sub-category hierarchy and product management. IKF uploads up to 10 products for client reference.</td><td contenteditable="true">1</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">7</td><td contenteditable="true">Module Development: News and Events, Blogs, Client Testimonials, Gallery and FAQ.</td><td contenteditable="true">5</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr><td contenteditable="true">8</td><td contenteditable="true">Content Writing Website: brand-aligned marketing content for primary website sections. Technical inputs to be provided by client.</td><td contenteditable="true">1</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr class="total-row"><td colspan="4" contenteditable="true">Total Charges</td><td class="money" contenteditable="true">₹</td></tr>
+              </tbody>
+            </table>
+            <div class="row-tools edit-only"><button type="button" class="secondary" onclick="addTableRow(this)">Add Row</button><button type="button" class="secondary" onclick="deleteTableRow(this)">Delete Last Row</button></div>
+
+            <table data-table="seo-india-commercial">
+              <thead>
+                <tr class="table-title"><th colspan="5">(C) Search Engine Optimization - India</th></tr>
+                <tr><th>Sr No.</th><th>Particulars</th><th>Approx. Keywords</th><th>Cost / keyword</th><th>Cost / Month</th></tr>
+              </thead>
+              <tbody>
+                <tr><td contenteditable="true">1</td><td contenteditable="true">Search Engine Optimisation + Generative Engine Optimisation: Region - India. GEO focuses on optimizing website content and structure for visibility across generative AI-driven search and discovery platforms. SEO includes on-page and off-page optimisation with select keywords.</td><td contenteditable="true">50</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr class="total-row"><td colspan="4" contenteditable="true">Total Monthly Retainer:</td><td class="money" contenteditable="true">₹</td></tr>
+              </tbody>
+            </table>
+            <div class="row-tools edit-only"><button type="button" class="secondary" onclick="addTableRow(this)">Add Row</button><button type="button" class="secondary" onclick="deleteTableRow(this)">Delete Last Row</button></div>
+
+            <table data-table="paid-pr-commercial">
+              <thead>
+                <tr class="table-title"><th colspan="3">(D) Paid Backlinking/Digital PR - India</th></tr>
+                <tr><th>Sr No.</th><th>Particulars</th><th>Cost / Month</th></tr>
+              </thead>
+              <tbody>
+                <tr><td contenteditable="true">1</td><td contenteditable="true">Paid Backlinking/Digital PR: India. Structured plan to strengthen website authority and improve search visibility through niche-relevant domains, contextual backlinks, content alignment and ongoing monitoring.</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr class="total-row"><td colspan="2" contenteditable="true">Total Monthly Retainer:</td><td class="money" contenteditable="true">₹</td></tr>
+              </tbody>
+            </table>
+            <div class="row-tools edit-only"><button type="button" class="secondary" onclick="addTableRow(this)">Add Row</button><button type="button" class="secondary" onclick="deleteTableRow(this)">Delete Last Row</button></div>
+
+            <table data-table="seo-me-commercial">
+              <thead>
+                <tr class="table-title"><th colspan="5">(E) Search Engine Optimization - Middle East</th></tr>
+                <tr><th>Sr No.</th><th>Particulars</th><th>Approx. Keywords</th><th>Cost / keyword</th><th>Cost / Month</th></tr>
+              </thead>
+              <tbody>
+                <tr><td contenteditable="true">1</td><td contenteditable="true">Search Engine Optimisation + Generative Engine Optimisation: Region - Middle East. GEO focuses on optimizing website content and structure for visibility across generative AI-driven search and discovery platforms. SEO includes on-page and off-page optimisation with select keywords.</td><td contenteditable="true">20</td><td class="money" contenteditable="true">₹</td><td class="money" contenteditable="true">₹</td></tr>
+                <tr class="total-row"><td colspan="4" contenteditable="true">Total Monthly Retainer:</td><td class="money" contenteditable="true">₹</td></tr>
+              </tbody>
+            </table>
+            <div class="row-tools edit-only"><button type="button" class="secondary" onclick="addTableRow(this)">Add Row</button><button type="button" class="secondary" onclick="deleteTableRow(this)">Delete Last Row</button></div>
+          </section>
+
+          <section class="section" data-section="Terms and Conditions" data-component="terms-website">
+            <div class="section-controls edit-only"><button type="button" class="ghost" onclick="hideSection(this)">Remove Section</button></div>
+            <h2 contenteditable="true">TERMS &amp; CONDITIONS</h2>
+            <h3 contenteditable="true">PAYMENT TERMS</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Branding Kit: 50% advance along with the Purchase Order and 50% post design approval before handing over open files.</li>
+              <li contenteditable="true">Website Designing &amp; Development: 50% advance, 25% on design approval before coding/CMS deployment, and 25% before go-live approval on staging server.</li>
+              <li contenteditable="true">Extra Pages / Units: additional pages beyond proposal minimum charged at Rs. 6,000 per page.</li>
+              <li contenteditable="true">Inner Pages: up to 4 folds; additional fold charged at Rs. 1,000 per fold.</li>
+              <li contenteditable="true">GST at 18.00% applicable for Indian entity and INR billing.</li>
+              <li contenteditable="true">Annual Website Maintenance and Hosting: 100% annual advance against invoice.</li>
+              <li contenteditable="true">AMC begins after 30 days of free website support after go-live stage.</li>
+              <li contenteditable="true">SEO Retainer: 100% advance against Invoice.</li>
+            </ul>
+            <h3 contenteditable="true">GENERAL TERMS</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">I Knowledge Factory Pvt. Ltd. will carry out work within 7 days where an agreement is provided by email or PO along with advance payment.</li>
+              <li contenteditable="true">This commercial is valid for 7 days from the proposal date.</li>
+              <li contenteditable="true">All work will be conducted exclusively from the premises of IKF.</li>
+              <li contenteditable="true">Once designs, layouts, plans and posts are approved, further changes requested by client will be subject to additional charges.</li>
+              <li contenteditable="true">Module framework development is included; post-development data/content migration and upload is the client's responsibility unless scoped.</li>
+              <li contenteditable="true">AMC extra manpower charges apply at Rs. 2,000 per man hour if quoted hours are consumed before due date.</li>
+              <li contenteditable="true">Monthly meetings are virtual; quarterly in-person meetings can take place if required.</li>
+              <li contenteditable="true">Agency reserves right to hold work if payments are delayed.</li>
+            </ul>
+            <h3 contenteditable="true">WEBSITE FONT POLICY</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Only Google Fonts will be used by default.</li>
+              <li contenteditable="true">Client bears full cost if a paid or brand-specific font is requested.</li>
+              <li contenteditable="true">If any Google Font turns paid in the future, licensing compliance is solely the client's responsibility.</li>
+            </ul>
+            <h3 contenteditable="true">MIGRATION OF EXISTING WEBSITE CONTENT</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">IKF will migrate any data/content as directed by the client.</li>
+              <li contenteditable="true">Client confirms they hold all necessary rights/licenses for existing website content.</li>
+              <li contenteditable="true">IKF holds no liability for copyright or IP disputes arising from migrated content.</li>
+            </ul>
+            <h3 contenteditable="true">FEEDBACK POLICY</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Only consolidated feedback is accepted.</li>
+              <li contenteditable="true">A maximum of 2 revision cycles is permitted per stage.</li>
+              <li contenteditable="true">All feedback must be submitted through the designated project communication channel.</li>
+            </ul>
+            <h3 contenteditable="true">COMPLIMENTARY LICENSED STOCK IMAGES</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">Up to 10 Shutterstock images are included at no additional cost; additional images charged at Rs. 500 per image.</li>
+              <li contenteditable="true">Stock images remain property of Shutterstock, are licensed and not sold, and cannot be resold, redistributed or transferred.</li>
+              <li contenteditable="true">AI-generated or AI-modified visuals are created using third-party tools. Commercial usage is granted but exclusivity and enforceable copyright claims cannot be guaranteed.</li>
+              <li contenteditable="true">Client-supplied images remain the client's responsibility for usage rights, permissions and legal compliance.</li>
+            </ul>
+            <h3 contenteditable="true">PAYMENT &amp; NO REFUND POLICY</h3>
+            <ul class="bullet-list" data-list>
+              <li contenteditable="true">All payments made towards the website project are non-refundable, including advance, milestone and full payments.</li>
+              <li contenteditable="true">If the client discontinues after commencement, payments made up to that stage remain non-refundable.</li>
+              <li contenteditable="true">If project is delayed due to lack of content, approvals or communication for more than 30 days, reactivation may incur additional charges.</li>
+              <li contenteditable="true">Changes beyond agreed scope may result in add-on costing.</li>
+              <li contenteditable="true">Retainer services require 30 days prior termination communication; fees for commenced service periods are non-refundable.</li>
+              <li contenteditable="true">Commercial does not include outstation travel, accommodation, incidental charges, video production or work beyond proposal scope.</li>
+              <li contenteditable="true">Services not covered in AMC include major updates, new functionalities/modules, paid plugins/integrations, extra backend functions, frontend design changes and altering website usability.</li>
+              <li contenteditable="true">These terms and conditions supersede any previously stated terms and conditions in the proposal.</li>
+            </ul>
+            <div class="list-tools edit-only">
+              <button type="button" class="secondary" onclick="addBullet(this)">Add Bullet</button>
+              <button type="button" class="secondary" onclick="addSubBullet(this)">Add Sub-Bullet</button>
+              <button type="button" class="secondary" onclick="deleteBullet(this)">Delete Last Bullet</button>
+            </div>
+          </section>
+        </main>
+      </div>
+    </main>
   </div>
 
-  {{BODY}}
-
+  <script src="../client-logos/manifest.js"></script>
   <script>
-    function toggleEdit() {
-      document.body.classList.toggle('editing');
+    const componentLabels = {
+      "cover": "Cover",
+      "about": "About Us",
+      "client-proof": "Client Logo Grid",
+      "scope-digital": "Scope of Work",
+      "seo": "SEO Scope",
+      "smm": "Social Media Management",
+      "ppc": "Performance Marketing",
+      "commercial-digital": "Digital Commercial Tables",
+      "terms-digital": "Digital Terms",
+      "scope-website": "Website Scope of Work",
+      "website": "Website Design & Development",
+      "website-process": "Website Process",
+      "amc-hosting": "AMC & Hosting",
+      "seo-clone-target": "SEO Scope (Website Variant)",
+      "commercial-website": "Website Commercial Tables",
+      "terms-website": "Website Terms"
+    };
+
+    function initializeComponents() {
+      syncSharedSeoComponent();
+      hydrateLogoGrid();
+      buildComponentToggles();
+      populateJump();
+      populateLogoControls();
+      if (!document.querySelector("#logoGrid .logo-cell")) {
+        applyLogoCategory("manufacturing");
+      } else {
+        ensureLogoAddCell();
+      }
+      installTablePasteHandlers();
+      applyTypography();
     }
-    function jumpToSection(name) {
-      if (!name) return;
-      const section = document.querySelector('[data-section="' + CSS.escape(name) + '"]');
-      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    function syncSharedSeoComponent() {
+      const source = document.querySelector('[data-component="seo"]');
+      const target = document.querySelector('[data-component="seo-clone-target"]');
+      if (!source || !target || target.dataset.synced === "true") return;
+      target.innerHTML = source.innerHTML;
+      target.dataset.synced = "true";
     }
+
+    function syncClientName(value) {
+      const client = value.trim() || "Client";
+      document.querySelectorAll("[data-client-token]").forEach(el => {
+        el.textContent = client;
+      });
+      document.title = "IKF Commercial Proposal - " + client;
+    }
+
+    function applyTypography() {
+      const family = document.getElementById("fontFamilySelect")?.value || "Calibri, Arial, sans-serif";
+      const size = document.getElementById("fontSizeSelect")?.value || "10.5px";
+      document.querySelectorAll(".page").forEach(page => {
+        page.style.fontFamily = family;
+        page.style.fontSize = size;
+      });
+    }
+
+    function buildComponentToggles() {
+      const host = document.getElementById("componentToggles");
+      host.innerHTML = "";
+      document.querySelectorAll("[data-component]").forEach(section => {
+        if (!section.matches(".section, .page")) return;
+        const component = section.dataset.component;
+        const label = document.createElement("label");
+        label.className = "check-row";
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.checked = !section.classList.contains("is-hidden");
+        input.addEventListener("change", () => {
+          section.classList.toggle("is-hidden", !input.checked);
+          populateJump();
+        });
+        const span = document.createElement("span");
+        span.textContent = componentLabels[component] || component;
+        label.append(input, span);
+        host.appendChild(label);
+      });
+    }
+
+    function hideSection(button) {
+      const section = button.closest(".section");
+      if (!section) return;
+      section.classList.add("is-hidden");
+      buildComponentToggles();
+      populateJump();
+    }
+
+    function jumpToSection(component) {
+      if (!component) return;
+      const section = Array.from(document.querySelectorAll(`[data-component="${CSS.escape(component)}"]:not(.is-hidden)`))
+        .find(el => el.offsetParent !== null);
+      if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
     function populateJump() {
-      const select = document.getElementById('sectionJump');
-      document.querySelectorAll('[data-section]').forEach(section => {
-        const option = document.createElement('option');
-        option.value = section.dataset.section;
-        option.textContent = section.dataset.section;
+      const select = document.getElementById("sectionJump");
+      select.innerHTML = '<option value="">Jump to section</option>';
+      document.querySelectorAll("[data-component][data-section]:not(.is-hidden)").forEach(section => {
+        const option = document.createElement("option");
+        option.value = section.dataset.component;
+        option.textContent = componentLabels[section.dataset.component] || section.dataset.section;
         select.appendChild(option);
       });
     }
+
     function listFor(button) {
-      return button.closest('.section, td').querySelector('.bullet-list');
+      const section = button.closest(".section, td");
+      return section ? section.querySelector(".bullet-list") : null;
     }
+
     function addBullet(button) {
       const list = listFor(button);
       if (!list) return;
-      const li = document.createElement('li');
-      li.contentEditable = 'true';
-      li.textContent = 'New bullet';
+      const li = document.createElement("li");
+      li.contentEditable = "true";
+      li.textContent = "New bullet";
       list.appendChild(li);
       li.focus();
     }
+
     function addSubBullet(button) {
       const list = listFor(button);
       const parent = list && list.lastElementChild;
       if (!parent) return;
-      let nested = parent.querySelector('ul');
+      let nested = parent.querySelector("ul");
       if (!nested) {
-        nested = document.createElement('ul');
+        nested = document.createElement("ul");
         parent.appendChild(nested);
       }
-      const li = document.createElement('li');
-      li.contentEditable = 'true';
-      li.textContent = 'New sub-bullet';
+      const li = document.createElement("li");
+      li.contentEditable = "true";
+      li.textContent = "New sub-bullet";
       nested.appendChild(li);
       li.focus();
     }
+
     function deleteBullet(button) {
       const list = listFor(button);
       if (!list) return;
-      const bullets = list.querySelectorAll('li');
+      const bullets = list.querySelectorAll("li");
       if (bullets.length > 1) bullets[bullets.length - 1].remove();
     }
+
     function tableFor(button) {
-      return button.closest('.section, td').querySelector('table');
+      const container = button.previousElementSibling && button.previousElementSibling.tagName === "TABLE"
+        ? button.previousElementSibling
+        : button.closest(".section, td").querySelector("table");
+      return container;
     }
+
     function addTableRow(button) {
       const table = tableFor(button);
-      if (!table) return;
+      if (!table || !table.tBodies.length) return;
       const body = table.tBodies[0];
-      const template = Array.from(body.rows).reverse().find(row => !row.classList.contains('total-row')) || body.rows[0];
+      const template = Array.from(body.rows).reverse().find(row => !row.classList.contains("total-row")) || body.rows[0];
+      if (!template) return;
       const row = template.cloneNode(true);
-      row.classList.remove('total-row');
-      row.querySelectorAll('td').forEach((cell, index) => {
-        cell.contentEditable = 'true';
-        cell.textContent = index === 0 ? 'New item' : '';
+      row.classList.remove("total-row");
+      row.querySelectorAll("td").forEach((cell, index) => {
+        cell.contentEditable = "true";
+        cell.textContent = index === 0 ? String(body.rows.length + 1) : "";
       });
-      body.appendChild(row);
+      const firstTotal = Array.from(body.rows).find(row => row.classList.contains("total-row"));
+      body.insertBefore(row, firstTotal || null);
     }
+
     function deleteTableRow(button) {
       const table = tableFor(button);
-      if (!table) return;
-      const rows = Array.from(table.tBodies[0].rows).filter(row => !row.classList.contains('total-row'));
+      if (!table || !table.tBodies.length) return;
+      const rows = Array.from(table.tBodies[0].rows).filter(row => !row.classList.contains("total-row"));
       if (rows.length > 1) rows[rows.length - 1].remove();
     }
+
+    function installTablePasteHandlers() {
+      document.querySelectorAll("table").forEach(table => {
+        table.addEventListener("paste", handleTablePaste);
+      });
+    }
+
+    function handleTablePaste(event) {
+      const cell = event.target.closest("td, th");
+      const table = event.currentTarget;
+      const text = event.clipboardData && event.clipboardData.getData("text/plain");
+      if (!cell || !table || !text || !text.includes("\t")) return;
+      event.preventDefault();
+      const rows = text.trimEnd().split(/\r?\n/).map(row => row.split("\t"));
+      pasteMatrixIntoTable(table, cell, rows);
+    }
+
+    function pasteMatrixIntoTable(table, startCell, matrix) {
+      const startRow = startCell.parentElement;
+      const tbody = table.tBodies[0] || table.createTBody();
+      const bodyRows = Array.from(tbody.rows);
+      const startRowIndex = bodyRows.indexOf(startRow);
+      const startCellIndex = Array.from(startRow.cells).indexOf(startCell);
+      const insertAt = startRowIndex >= 0 ? startRowIndex : bodyRows.length;
+      matrix.forEach((sourceRow, rowOffset) => {
+        let row = tbody.rows[insertAt + rowOffset];
+        if (!row || row.classList.contains("total-row")) {
+          row = createTableRow(table, sourceRow.length);
+          const firstTotal = Array.from(tbody.rows).find(item => item.classList.contains("total-row"));
+          tbody.insertBefore(row, firstTotal || null);
+        }
+        sourceRow.forEach((value, colOffset) => {
+          const cellIndex = Math.max(0, startCellIndex) + colOffset;
+          while (row.cells.length <= cellIndex) {
+            const td = document.createElement("td");
+            td.contentEditable = "true";
+            row.appendChild(td);
+          }
+          row.cells[cellIndex].textContent = value;
+          row.cells[cellIndex].contentEditable = "true";
+        });
+      });
+    }
+
+    function createTableRow(table, minimumCells) {
+      const sample = Array.from(table.tBodies[0].rows).find(row => !row.classList.contains("total-row"));
+      const columns = Math.max(minimumCells, sample ? sample.cells.length : 1);
+      const row = document.createElement("tr");
+      for (let i = 0; i < columns; i += 1) {
+        const td = document.createElement("td");
+        td.contentEditable = "true";
+        row.appendChild(td);
+      }
+      return row;
+    }
+
+    function logoBasePath() {
+      const script = document.querySelector('script[src$="manifest.js"]');
+      if (!script) return "../client-logos/";
+      return script.getAttribute("src").replace(/manifest\.js$/, "");
+    }
+
+    function logoCategories() {
+      return (window.IKF_CLIENT_LOGOS && window.IKF_CLIENT_LOGOS.categories) || {};
+    }
+
+    function allLogoEntries() {
+      return Object.entries(logoCategories()).flatMap(([key, category]) => {
+        return (category.logos || []).map(logo => ({
+          category: key,
+          categoryLabel: category.label || key,
+          name: logo.name || logo.file,
+          file: logo.file
+        }));
+      });
+    }
+
+    function populateLogoControls() {
+      const categorySelect = document.getElementById("logoCategorySelect");
+      if (!categorySelect) return;
+      categorySelect.innerHTML = "";
+      Object.entries(logoCategories()).forEach(([key, category]) => {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = `${category.label || key} (${(category.logos || []).length})`;
+        categorySelect.appendChild(option);
+      });
+    }
+
+    function applyLogoCategory(categoryName) {
+      const categoryKey = categoryName || document.getElementById("logoCategorySelect")?.value || "manufacturing";
+      const category = logoCategories()[categoryKey];
+      const logos = category && category.logos ? category.logos.slice(0, 20) : allLogoEntries().slice(0, 20);
+      const grid = document.getElementById("logoGrid");
+      if (!grid) return;
+      grid.innerHTML = "";
+      logos.forEach(logo => addLogoCell(logo.file, logo.name || logo.file));
+      ensureLogoAddCell();
+      const firstCell = grid.querySelector(".logo-cell");
+      if (firstCell) selectLogoCell(firstCell);
+    }
+
+    function addLogoCell(file, name) {
+      const grid = document.getElementById("logoGrid");
+      if (!grid) return;
+      const addCell = grid.querySelector(".logo-add-cell");
+      const cell = document.createElement("div");
+      cell.className = "logo-cell";
+      cell.tabIndex = 0;
+      cell.addEventListener("click", () => selectLogoCell(cell));
+      const img = document.createElement("img");
+      img.alt = name || file || "Client logo";
+      img.src = file ? logoBasePath() + file : "";
+      img.dataset.logoFile = file || "";
+      const actions = document.createElement("div");
+      actions.className = "logo-cell-actions edit-only";
+      const replaceButton = document.createElement("button");
+      replaceButton.type = "button";
+      replaceButton.className = "secondary";
+      replaceButton.textContent = "Replace";
+      replaceButton.addEventListener("click", event => {
+        event.stopPropagation();
+        openLogoFilePicker(cell);
+      });
+      const removeButton = document.createElement("button");
+      removeButton.type = "button";
+      removeButton.className = "secondary";
+      removeButton.textContent = "Remove";
+      removeButton.addEventListener("click", event => {
+        event.stopPropagation();
+        removeLogoCell(removeButton);
+      });
+      actions.append(replaceButton, removeButton);
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+      input.className = "logo-file-input";
+      input.addEventListener("change", () => uploadLogoToCell(input, cell));
+      cell.append(img, actions, input);
+      grid.insertBefore(cell, addCell || null);
+      selectLogoCell(cell);
+    }
+
+    function hydrateLogoGrid() {
+      document.querySelectorAll(".logo-add-cell").forEach(cell => cell.remove());
+      document.querySelectorAll(".logo-cell").forEach(cell => {
+        const img = cell.querySelector("img");
+        if (!img) return;
+        cell.querySelectorAll(".logo-cell-actions, .logo-file-input").forEach(item => item.remove());
+        cell.addEventListener("click", () => selectLogoCell(cell));
+        const actions = document.createElement("div");
+        actions.className = "logo-cell-actions edit-only";
+        const replaceButton = document.createElement("button");
+        replaceButton.type = "button";
+        replaceButton.className = "secondary";
+        replaceButton.textContent = "Replace";
+        replaceButton.addEventListener("click", event => {
+          event.stopPropagation();
+          openLogoFilePicker(cell);
+        });
+        const removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.className = "secondary";
+        removeButton.textContent = "Remove";
+        removeButton.addEventListener("click", event => {
+          event.stopPropagation();
+          removeLogoCell(removeButton);
+        });
+        actions.append(replaceButton, removeButton);
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.className = "logo-file-input";
+        input.addEventListener("change", () => uploadLogoToCell(input, cell));
+        cell.append(actions, input);
+      });
+    }
+
+    function selectLogoCell(cell) {
+      document.querySelectorAll(".logo-cell.is-selected").forEach(item => item.classList.remove("is-selected"));
+      cell.classList.add("is-selected");
+    }
+
+    function openLogoFilePicker(cell) {
+      if (!cell) return;
+      selectLogoCell(cell);
+      const input = cell.querySelector(".logo-file-input");
+      if (input) input.click();
+    }
+
+    function removeLogoCell(button) {
+      const cell = button.closest(".logo-cell");
+      if (cell) cell.remove();
+      ensureLogoAddCell();
+    }
+
+    function uploadLogoToCell(input, cell) {
+      const file = input.files && input.files[0];
+      if (!file || !cell) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = cell.querySelector("img");
+        img.src = reader.result;
+        img.alt = file.name;
+        img.dataset.logoFile = file.name;
+      };
+      reader.readAsDataURL(file);
+      input.value = "";
+    }
+
+    function ensureLogoAddCell() {
+      const grid = document.getElementById("logoGrid");
+      if (!grid || grid.querySelector(".logo-add-cell")) return;
+      const cell = document.createElement("button");
+      cell.type = "button";
+      cell.className = "logo-add-cell edit-only";
+      cell.innerHTML = '+<span>Add logo</span>';
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+      input.className = "logo-file-input";
+      input.addEventListener("change", () => {
+        const file = input.files && input.files[0];
+        if (!file) return;
+        addLogoCell("", file.name);
+        const added = Array.from(grid.querySelectorAll(".logo-cell")).at(-1);
+        uploadLogoToCell(input, added);
+      });
+      cell.addEventListener("click", () => input.click());
+      cell.appendChild(input);
+      grid.appendChild(cell);
+    }
+
     function saveHtml() {
       const clone = document.documentElement.cloneNode(true);
-      const html = '<!doctype html>\n' + clone.outerHTML;
-      const blob = new Blob([html], { type: 'text/html' });
+      clone.querySelectorAll(".is-hidden").forEach(el => {
+        if (el.matches("[data-component], [data-family], [data-title-for], .section, [data-digital-only], [data-website-only]")) {
+          el.remove();
+        }
+      });
+      const html = "<!doctype html>\n" + clone.outerHTML;
+      const blob = new Blob([html], { type: "text/html" });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = document.title.replace(/[^a-z0-9]+/gi, '_') + '.html';
+      a.download = document.title.replace(/[^a-z0-9]+/gi, "_") + ".html";
       a.click();
       URL.revokeObjectURL(url);
     }
-    populateJump();
+
+    initializeComponents();
   </script>
 </body>
 </html>

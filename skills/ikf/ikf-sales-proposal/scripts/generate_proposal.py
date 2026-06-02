@@ -424,6 +424,24 @@ def build_body(args, services):
     return "\n".join(body)
 
 
+def family_for_services(services):
+    service_set = set(services)
+    if service_set & {"branding_kit", "website", "amc", "hosting"}:
+        return "brandkit-website-amc-hosting-seo"
+    return "seo-ppc-smm"
+
+
+def prefill_editor(template, args, services):
+    client_text = esc(args.client)
+    title_text = f"IKF Commercial Proposal - {args.client}"
+    output = template
+    output = output.replace("<title>IKF Proposal Editor</title>", f"<title>{esc(title_text)}</title>")
+    output = output.replace(">ABC<", f">{client_text}<")
+    output = output.replace("../brand-pages/", "assets/brand-pages/")
+    output = output.replace("../client-logos/", "assets/client-logos/")
+    return output
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--client", required=True)
@@ -444,10 +462,8 @@ def main():
     if not services:
         raise SystemExit("No valid services selected.")
 
-    title_text = f"IKF Commercial Proposal - {args.client}"
     html_text = TEMPLATE.read_text()
-    html_text = html_text.replace("{{TITLE}}", esc(title_text))
-    html_text = html_text.replace("{{BODY}}", build_body(args, services))
+    html_text = prefill_editor(html_text, args, services)
 
     out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -457,6 +473,10 @@ def main():
     for asset in source_brand.iterdir():
         if asset.is_file():
             shutil.copy2(asset, target_brand / asset.name)
+    source_logos = ROOT / "assets" / "client-logos"
+    target_logos = out_dir / "assets" / "client-logos"
+    if source_logos.exists():
+        shutil.copytree(source_logos, target_logos, dirs_exist_ok=True)
     out_file = out_dir / f"IKF_Commercial_Proposal_{slug(args.client)}_{dt.date.today().isoformat()}.html"
     out_file.write_text(html_text)
     print(out_file.resolve())

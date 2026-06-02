@@ -1,0 +1,4 @@
+interface:
+  display_name: "IKF Masterclass Proposal Maker"
+  short_description: "Create IKF accelerator proposals"
+  default_prompt: "Use $ikf-masterclass-proposal-maker to create an IKF AI-Native Thinking Accelerator proposal from the locked base template."

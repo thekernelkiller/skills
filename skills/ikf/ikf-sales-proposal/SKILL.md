@@ -7,7 +7,9 @@ description: Create editable IKF commercial proposal HTML/PDF drafts from IKF's 
 
 ## Purpose
 
-Create ready-to-review IKF sales proposal HTML files that follow the existing Word proposal families. Do not invent a generic proposal, marketing narrative, recommendation section, metadata panel, or arbitrary service card layout.
+Create and adapt IKF sales proposals using the bundled proposal editor. Treat `assets/template/editable-proposal.html` as a DOCX-derived editable proposal app, not an empty page that AI rewrites from scratch. The editor already contains the default sections, commercial table skeletons, terms, brand pages, and edit controls needed by sales.
+
+Do not invent a generic proposal, marketing narrative, recommendation section, metadata panel, or arbitrary service card layout.
 
 ## Required Inputs
 
@@ -21,14 +23,33 @@ Ask for missing essentials before generating:
 
 If commercial inputs are missing or ambiguous, ask before drafting. Do not fill prices from defaults unless the user explicitly confirms them.
 
-## Proposal Families
+## Source Proposal Examples
 
-Choose the closest source family before writing:
+The bundled DOCX files are source examples for default content and hierarchy, not rigid proposal family modes.
 
-- `seo-ppc-smm`: use when services include SEO, PPC/Performance Marketing, and Social Media Management. Section order is Cover, About Us, They Believe In Us, Scope of Work, SEO, SMM, Performance Marketing, Commercial Proposal, Terms & Conditions.
-- `brandkit-website-amc-hosting-seo`: use when services include Branding Kit, Website, AMC, Hosting, and SEO. Section order is Cover, About Us, They Believe In Us, Scope of Work, Website, Client Responsibilities, Website Process, AMC/Hosting, SEO, Commercial Proposal, Terms & Conditions.
+- PPC, SEO, Social Media Management proposal: source for SEO, SMM, Performance Marketing, digital commercial tables, and digital terms.
+- Branding Kit, Website, AMC, Hosting, SEO proposal: source for Website, Website Process, AMC/Hosting, website commercial tables, and website terms.
 
-If the user selects a mixed service combination that does not match a known family, choose the nearest family and state the assumption before generating. Keep the family section order; omit only service sections that are genuinely unselected.
+Do not force the user into a family. Make all components available and include/remove only the blocks needed for the proposal.
+
+## Editor Model
+
+The core deliverable is a custom proposal editor with AI assistance, not full autopilot.
+
+- `assets/template/editable-proposal.html` is the canonical base editor.
+- Each major DOCX section is represented as an editable component with default source content.
+- Sales users can add/remove bullets, add/remove table rows, remove sections, select included components, edit client names, swap logos, paste tables from Excel, and export HTML/PDF.
+- AI should help select components, prepare client-specific fields, suggest small edits, replace logo categories, verify stale references, and sanity-check commercial placement.
+- AI should not rewrite fixed scope, terms, process, AMC, SEO, SMM, PPC, or website default prose unless the user explicitly asks.
+
+Component examples:
+
+- `scope-digital`, `seo`, `smm`, `ppc`, `commercial-digital`, `terms-digital`
+- `scope-website`, `website`, `website-process`, `amc-hosting`, `commercial-website`, `terms-website`
+
+Commercial tables are components too. Keep pricing in the Commercial Proposal component only.
+
+The `They Believe In Us` page is an editable logo grid backed by `assets/client-logos/manifest.js` and `assets/client-logos/`. AI-compatible logo replacement means selecting a category such as manufacturing, education, healthcare, finance, real estate, etc. and applying that category to the grid. Users can also search, replace individual logo cells, add slots, remove slots, or upload a one-off image manually.
 
 ## Non-Negotiable Layout Rules
 
@@ -41,19 +62,20 @@ If the user selects a mixed service combination that does not match a known fami
 
 ## Workflow
 
-1. Read this skill file and identify the proposal family from selected services.
+1. Read this skill file and identify the needed proposal components from selected services.
 2. Read or inspect the relevant assets:
    - `assets/template/editable-proposal.html`
    - `assets/brand-pages/`
    - `assets/client-logos/manifest.json` when a proposal needs industry-specific client logos
    - `scripts/generate_proposal.py`
-3. Research the client only for factual context; do not add a recommendation section unless requested.
-4. Finalize the section outline before editing or generating.
-5. Ask for any missing commercial inputs.
-6. Generate with `scripts/generate_proposal.py`.
-7. Patch the output only for known client-specific edits, not structural invention.
-8. Open/preview the generated HTML when possible.
-9. Verify the output against the family section order and commercial placement.
+3. Start from the editor template. Do not create a proposal from a blank HTML file.
+4. Research the client only for factual context; do not add a recommendation section unless requested.
+5. Finalize included components before editing or generating.
+6. Ask for any missing commercial inputs.
+7. Use the editor directly for manual sales-ready output, or use `scripts/generate_proposal.py` only as a helper to prefill client/family details.
+8. Patch the output only for known client-specific edits, not structural invention.
+9. Open/preview the generated HTML when possible.
+10. Verify the output against the selected component list and commercial placement.
 
 ## Editable Behavior
 
@@ -62,6 +84,8 @@ Generated HTML must support direct sales edits:
 - Text blocks and table cells use `contenteditable`.
 - Bullet lists include visible edit controls: Add Bullet, Add Sub-Bullet, Delete Last Bullet.
 - Commercial tables include Add Row and Delete Last Row controls.
+- Commercial tables accept tabular paste from Excel/Sheets. Click the target starting cell and paste; tab/newline clipboard data is distributed across rows and columns.
+- The client proof page uses editable logo cells, category replacement, per-cell file replacement, add-slot, and remove controls.
 - Edit controls are visible on screen and hidden in print/PDF.
 - “Save HTML” stores an edited copy and “Export PDF” uses browser print.
 
