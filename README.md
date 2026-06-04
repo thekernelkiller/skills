@@ -8,13 +8,13 @@ A collection of Agent Skills for use with Claude Code, OpenCode, and other AI co
 
 ## IKF
 
-- **[ikf-proposal-personalizer](./skills/ikf/ikf-proposal-personalizer/)** — Personalize IKF AI Masterclass proposal HTML files from the locked base template, including client research, pricing, format, travel/payment terms, and stale-reference checks.
+- **[ikf-masterclass-proposal-maker](./skills/ikf/ikf-masterclass-proposal-maker/)** — Create and personalize IKF AI Native Thinking Masterclass proposal HTML and n8n email-renderer assets, including client research, personal transformation copy, fixed 9-pillar relevance scores, single membership pricing, payment/scope terms, and stale-reference checks.
 - **[ikf-sales-proposal](./skills/ikf/ikf-sales-proposal/)** — Create editable IKF commercial proposal HTML/PDF drafts from IKF's DOCX proposal families, with brand pages, client-logo assets, service scope, commercial tables, and print/export controls.
 
 ## Usage
 
 ```bash
 npx skills add https://github.com/thekernelkiller/skills --skill agent-engineering
-npx skills add https://github.com/thekernelkiller/skills --skill ikf-proposal-personalizer
+npx skills add https://github.com/thekernelkiller/skills --skill ikf-masterclass-proposal-maker
 npx skills add https://github.com/thekernelkiller/skills --skill ikf-sales-proposal
 ```

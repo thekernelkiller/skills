@@ -1,6 +1,6 @@
 ---
 name: ikf-masterclass-proposal-maker
-description: Create and personalize IKF AI-Native Thinking Accelerator proposal HTML files from the locked base template. Use when creating or updating a client-specific IKF masterclass or 3-month accelerator proposal, including client web research, required-input checks, business-problem personalization, copying the base template, replacing every client reference, updating the 9-pillar framework and single pricing block, verifying stale references, and opening the edited proposal in Chrome for preview.
+description: Create and personalize IKF AI Native Thinking Masterclass proposal HTML files from the locked base template. Use when creating or updating a client-specific IKF masterclass or 3-month masterclass proposal, including client web research, required-input checks, business-problem personalization, copying the base template, replacing every client reference, updating personal transformation copy, updating fixed 9-pillar relevance scores, keeping the single pricing block, verifying stale references, and opening the edited proposal in Chrome for preview.
 ---
 
 # IKF Masterclass Proposal Maker
@@ -13,8 +13,11 @@ description: Create and personalize IKF AI-Native Thinking Accelerator proposal 
 - Preserve layout, structure, styling, spacing, and design unless the user explicitly requests a design or layout change.
 - Do not add the removed cover metadata block (`Prepared for` / `Prepared by`) unless the user explicitly asks for it.
 - Set the cover subtitle to `Prepared for <Client Company Name>`; do not use the contact person's name there.
-- Treat the commercial offer as one accelerator membership price, not multiple masterclass formats.
+- Treat the commercial offer as one masterclass membership price, not multiple masterclass formats.
+- Treat the standard commercial, scope, payment, footer, bank, and IKF background content as hardcoded template content unless the user explicitly asks to change it.
 - Keep default payment terms as 100% advance payment to confirm participation unless the user provides different terms.
+- Include the current base-template section sequence in email proposal templates, including Inclusions and Exclusions, Payment Terms, How to Confirm This Engagement, About I Knowledge Factory Pvt. Ltd, and footer sections. Do not include Travel and Venue, the standalone After the Masterclass / Value Delivered block, or About the Speaker.
+- The 9 pillar titles and descriptions are fixed. AI output must only provide relevance scores for the fixed pillars.
 - Use Calibri unless the user explicitly asks for a different font.
 - Open the edited file in Chrome for the user to preview.
 
@@ -43,14 +46,14 @@ If any required detail is missing, ask for it before editing. If the website/dom
 4. Research the client before personalizing content.
 5. Use the client website as the primary source; use reliable public sources only when the website lacks enough context.
 6. Update all client-specific fields and prose, including contact name, designation, email, phone, company, website, industry, and stated business problems.
-7. Update the personal transformation section using the contact name, designation, researched business context, and the user's stated problems.
+7. Update the Impact of AI-Native Thinking section using the contact name, researched business context, and the user's stated problems.
 8. Include a concise bullet list of the person's pain points inside the personal transformation section, between the context paragraph and the transformation paragraph. Use 3-5 bullets, phrased as business challenges in the user's language when possible.
-9. Keep the 9-pillar accelerator framework intact unless the user asks to alter the program structure. Personalize examples inside the pillars to the client context where appropriate.
+9. Keep the 9-pillar masterclass framework intact. Do not let AI rename pillar titles or rewrite pillar descriptions in email proposal templates.
 10. Assign each pillar a relevance score from 0-100% using department presence, the contact's designation, stated pain points, and researched business context. Higher scores should reflect direct pain-point alignment or a department that exists in the organisation. Lower scores should still remain visible unless the user asks to hide them.
-11. Update the single pricing block only. Do not recreate half-day/full-day/two-day format cards.
-12. Keep the standard venue and delivery language unless the user provides specific location, remote, multi-city, or special logistics terms.
-13. Update payment terms only from user-provided facts.
-14. Keep all non-client-specific IKF content unchanged unless the user asks otherwise.
+11. Keep the single pricing block as the hardcoded masterclass price unless the user provides a different price. Do not recreate half-day/full-day/two-day format cards.
+12. Keep all non-client-specific IKF content unchanged unless the user asks otherwise. This includes the About I Knowledge Factory Pvt. Ltd section, investment details, inclusions/exclusions, payment terms, footer contact details, company address, and bank details.
+13. In email proposal templates, keep customisation concentrated in the personal transformation section, client/company references, the `relevance_scores` object for fixed pillar IDs, and the program note.
+14. Preserve the current post-pricing sections from the base template in email proposal templates. Keep their standard content hardcoded unless the user explicitly asks to change it. Do not reintroduce the removed Travel and Venue or Value Delivered sections.
 15. Open the edited file in Chrome for preview.
 16. Return a clickable local file link to the edited file.
 
@@ -65,16 +68,20 @@ Replace every occurrence of prior or placeholder client details, including:
 - Domain, website, email, phone number, and designation
 - Problems/challenges provided by the user
 - Industry and business context
-- Personal transformation block title and body
+- Impact of AI-Native Thinking block title and body
 - Pain-point bullet list, populated from the user's provided challenges
-- "What you are facing" and "what the accelerator can help you become" narrative
-- 9-pillar relevance percentages, with scores updated in both the visible text and the `--rel` bar width style
-- Accelerator membership price and participant terms
-- Inclusion examples that mention client industry
-- Travel and venue section, only when special logistics are provided
-- Outcome statements
-- Confirmation steps
-- Confidentiality note
+- "What you are facing" and "what the masterclass can help you become" narrative
+- 9-pillar relevance percentages only; titles and descriptions must remain fixed:
+  - 01 Leadership & Strategy
+  - 02 Sales & Marketing
+  - 03 HR & Recruitment
+  - 04 Finance & Accounts
+  - 05 Customer Service & Experience
+  - 06 Operations
+  - 07 Procurement & Purchase
+  - 08 Production & Manufacturing
+  - 09 Projects, Engineering & Digital Transformation
+- Masterclass membership price and participant terms, only when explicitly changed
 - Browser title, toolbar subtitle, email/PDF generated title text
 
 Do not leave traces of any other client in the edited file.
